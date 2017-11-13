@@ -8,6 +8,27 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+            <TextBlock TextWrapping="Wrap" Text="Wish me a List." FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
+            <TextBlock TextWrapping="Wrap" Text="Please, log in" FontSize="36" HorizontalAlignment="Center" Margin="0,0,0,50"/>
+            <StackPanel BorderThickness="1" BorderBrush="Gray" Padding="20">
+                <TextBox x:Name="txtEmail" PlaceholderText="E-mail" Margin="0,0,0,20"></TextBox>
+                <PasswordBox x:Name="txtPassword" PlaceholderText="Password" Margin="0,0,0,8"></PasswordBox>
+                <TextBlock x:Name="lnkRegister" Text="No account yet?" Margin="5,0,0,0" FontSize="12" Foreground="Blue" Style="{StaticResource BlueLink}"></TextBlock>
+            </StackPanel>
+        </StackPanel>
     </Grid>
+
+    <Page.Resources>
+        <Style x:Key="BlueLink" TargetType="TextBlock">
+            <!-- To fix -->
+            <Style.Triggers>
+                <Trigger Property ="IsMouseOver" Value="True">
+                    <Setter Property= "Foreground" Value="Blue"/>
+                    <Setter Property="Cursor" Value="Hand" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Page.Resources>
+    
 </Page>
