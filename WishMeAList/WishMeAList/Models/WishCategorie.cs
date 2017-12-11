@@ -9,12 +9,16 @@ namespace WishMeAList.Models
     public enum WishCategorie
     {
         MUZIEK_EN_FILMS,
+        MULTIMEDIA,
         KLEDIJ,
         BABY,
         SPELLETJES,
         SPORT,
         DRANK_EN_VOEDING,
         KEUKEN,
+        LIVING,
+        BADKAMER,
+        SLAAPKAMER,
         ANDERE
     }
 }

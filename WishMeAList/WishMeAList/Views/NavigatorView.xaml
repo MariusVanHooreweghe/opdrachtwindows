@@ -1,0 +1,20 @@
+﻿<Page
+    x:Class="WishMeAList.Views.NavigatorView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WishMeAList.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <SplitView IsPaneOpen="True" DisplayMode="Inline">
+        <SplitView.Pane>
+            <StackPanel Margin="10,25,0,0" >
+                <Button Content="My Wishlists" Command="{Binding ShowWishlistsOwningCommand}" Width="150" Margin="0,0,0,10"/>
+                <Button Content="Shared Wishlists" Command="{Binding ShowWishlistsAccessingCommand}" Width="150" Margin="0,0,0,10"/>
+                <Button Content="Wishes buying" Command="{Binding ShowWishesBuyingCommand}" Width="150"/>
+            </StackPanel>
+        </SplitView.Pane>
+        <ContentControl Content="{Binding CurrentData}" ContentTemplate="{Binding CurrentData.Template}"/>
+    </SplitView>
+</Page>

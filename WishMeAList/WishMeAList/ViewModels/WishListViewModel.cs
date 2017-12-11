@@ -9,13 +9,13 @@ using WishMeAList.Utils;
 
 namespace WishMeAList.ViewModels
 {
-    public class WishListAccessorViewModel
+    public class WishListViewModel : ViewModelBase
     {
         public RelayCommand ToggleCheckedWishCommand { get; set; }
-        public Models.WishList wishList { get; set; }
+        public WishList wishList { get; set; }
         public ObservableCollection<Wish> Wishes { get; set; }
 
-        public WishListAccessorViewModel(Models.WishList wishList)
+        public WishListViewModel(WishList wishList)
         {
             Wishes = new ObservableCollection<Wish>(wishList.Wishes);
             ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
@@ -38,4 +38,5 @@ namespace WishMeAList.ViewModels
             }
         }
     }
+
 }

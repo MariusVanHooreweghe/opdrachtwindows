@@ -3,6 +3,31 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WishMeAList"
+    xmlns:view="using:WishMeAList.Views"
     RequestedTheme="Light">
+
+    <Application.Resources>
+        <DataTemplate x:Key="MainPageViewModel">
+            <view:MainPage />
+        </DataTemplate>
+        <DataTemplate x:Key="LogInViewModel">
+            <view:LogInView/>
+        </DataTemplate>
+        <DataTemplate x:Key="RegisterViewModel">
+            <view:RegisterView/>
+        </DataTemplate>
+        <DataTemplate x:Key="NavigatorViewModel">
+            <view:NavigatorView/>
+        </DataTemplate>
+        <DataTemplate x:Key="WishesBuyingViewModel">
+            <view:WishesBuyingView/>
+        </DataTemplate>
+        <DataTemplate x:Key="WishListsViewModel">
+            <view:WishListsView/>
+        </DataTemplate>
+        <DataTemplate x:Key="WishListViewModel">
+            <view:WishListView/>
+        </DataTemplate>
+    </Application.Resources>
 
 </Application>
