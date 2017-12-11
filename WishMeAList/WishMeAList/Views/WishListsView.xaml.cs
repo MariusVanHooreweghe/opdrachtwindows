@@ -26,5 +26,10 @@ namespace WishMeAList.Views
         {
             this.InitializeComponent();
         }
+
+        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
     }
 }
