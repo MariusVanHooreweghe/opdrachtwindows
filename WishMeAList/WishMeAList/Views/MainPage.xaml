@@ -13,5 +13,5 @@
     </Page.DataContext>
 
     <ContentControl Content="{Binding CurrentData}" ContentTemplate="{Binding CurrentData.Template}"
-        HorizontalAlignment="Center"/>
+        HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"/>
 </Page>

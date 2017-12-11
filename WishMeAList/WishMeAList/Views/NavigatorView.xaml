@@ -9,7 +9,7 @@
 
     <SplitView IsPaneOpen="True" DisplayMode="Inline">
         <SplitView.Pane>
-            <StackPanel Margin="10,25,0,0" >
+            <StackPanel Margin="10,25,0,0">
                 <Button Content="My Wishlists" Command="{Binding ShowWishlistsOwningCommand}" Width="150" Margin="0,0,0,10"/>
                 <Button Content="Shared Wishlists" Command="{Binding ShowWishlistsAccessingCommand}" Width="150" Margin="0,0,0,10"/>
                 <Button Content="Wishes buying" Command="{Binding ShowWishesBuyingCommand}" Width="150"/>
