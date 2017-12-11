@@ -15,6 +15,6 @@
                 <Button Content="Wishes buying" Command="{Binding ShowWishesBuyingCommand}" Width="150"/>
             </StackPanel>
         </SplitView.Pane>
-        <ContentControl Content="{Binding CurrentData}" ContentTemplate="{Binding CurrentData.Template}"/>
+        <ContentControl HorizontalContentAlignment="Stretch" Content="{Binding CurrentData}" ContentTemplate="{Binding CurrentData.Template}"/>
     </SplitView>
 </Page>
