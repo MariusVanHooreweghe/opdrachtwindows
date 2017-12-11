@@ -16,7 +16,7 @@ namespace WishList.Models
         [ForeignKey("User")]
         public int OwnerID { get; set; }
         public string Title { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime DateOfEvent { get; set; }
         public virtual Collection<Wish> Wishes { get; set; }
         public virtual Collection<User> Accessors { get; set; }
 
