@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WishList.Utils
+namespace WishMeAList.Utils
 {
     public class RelayCommand : ICommand
     {

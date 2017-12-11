@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml;
 
-namespace WishList.ViewModels
+namespace WishMeAList.ViewModels
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

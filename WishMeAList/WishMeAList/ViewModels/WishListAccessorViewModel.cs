@@ -4,10 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WishList.Models;
-using WishList.Utils;
+using WishMeAList.Models;
+using WishMeAList.Utils;
 
-namespace WishList.ViewModels
+namespace WishMeAList.ViewModels
 {
     public class WishListAccessorViewModel
     {

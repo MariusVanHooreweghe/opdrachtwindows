@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WishList.Models
+namespace WishMeAList.Models
 {
     public enum WishCategorie
     {

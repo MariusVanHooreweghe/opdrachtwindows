@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="WishList.App"
+    x:Class="WishMeAList.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:WishList"
+    xmlns:local="using:WishMeAList"
     RequestedTheme="Light">
 
 </Application>

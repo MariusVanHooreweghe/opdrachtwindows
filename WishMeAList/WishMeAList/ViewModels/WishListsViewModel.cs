@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WishList.ViewModels
+namespace WishMeAList.ViewModels
 {
     public class WishListsViewModel
     {
