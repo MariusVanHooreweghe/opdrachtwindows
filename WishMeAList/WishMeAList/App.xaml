@@ -28,6 +28,10 @@
         <DataTemplate x:Key="WishListViewModel">
             <view:WishListView/>
         </DataTemplate>
+        <DataTemplate x:Key="AddWishListViewModel">
+            <view:AddWishListView/>
+        </DataTemplate>
+
     </Application.Resources>
 
 </Application>

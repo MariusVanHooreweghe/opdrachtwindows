@@ -20,16 +20,11 @@ namespace WishMeAList.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class WishListsView : Page
+    public sealed partial class AddWishListView : Page
     {
-        public WishListsView()
+        public AddWishListView()
         {
             this.InitializeComponent();
-        }
-
-        private void StackPanel_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-
         }
     }
 }

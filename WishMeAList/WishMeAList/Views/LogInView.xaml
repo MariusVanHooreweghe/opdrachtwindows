@@ -8,8 +8,8 @@
     xmlns:vm="using:WishMeAList.ViewModels"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel>
             <TextBlock TextWrapping="Wrap" Text="Wish me a List." FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
             <TextBlock TextWrapping="Wrap" Text="Please, log in" FontSize="36" HorizontalAlignment="Center" Margin="0,0,0,50"/>
             <StackPanel BorderThickness="1" BorderBrush="Gray" Padding="20">

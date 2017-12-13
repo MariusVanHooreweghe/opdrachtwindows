@@ -22,9 +22,6 @@ namespace WishMeAList.Views
     /// </summary>
     public sealed partial class WishListView : Page
     {
-        public WishListView()
-        {
-            this.InitializeComponent();
-        }
+      
     }
 }
