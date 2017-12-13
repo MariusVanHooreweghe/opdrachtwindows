@@ -26,7 +26,9 @@ namespace WishMeAListAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<WishListContext>(opt => opt.UseSqlServer("Server=tcp:tg-mvh-rs.database.windows.net,1433;Initial Catalog=WishMeALIstDB;Persist Security Info=False;User ID=MariusVanHooreweghe;Password=Letmein1100;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"));
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(
+            options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+        );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

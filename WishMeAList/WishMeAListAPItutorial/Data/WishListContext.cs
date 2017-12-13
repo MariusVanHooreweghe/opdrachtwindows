@@ -13,6 +13,10 @@ namespace WishMeAListAPItutorial.Data
         }
 
         public DbSet<WishList> WishLists { get; set; }
+        public DbSet<Wish> Wishes { get; set; }
+        public DbSet<WishListAccessor> WishListAccessors { get; set; }
+        public DbSet<User> Users { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

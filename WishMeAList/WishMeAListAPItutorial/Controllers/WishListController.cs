@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WishMeAListAPItutorial.Models;
 using WishMeAListAPItutorial.Data;
+using Microsoft.EntityFrameworkCore;
+
 namespace WishMeAListAPI.Controllers
 {
     [Produces("application/json")]
@@ -18,17 +20,17 @@ namespace WishMeAListAPI.Controllers
         {
             _context = context;
 
-            if (_context.WishLists.Count() == 0)
-            {
-                _context.WishLists.Add(new WishList { Title = "Item1" });
-                _context.WishLists.Add(new WishList { Title = "Item2" });
-                _context.SaveChanges();
-            }
+            //if (_context.WishLists.Count() == 0)
+            //{
+                //_context.WishLists.Add(new WishList { Title = "Item1", DateOfEvent = DateTime.Now, OwnerID = 1});
+            //    _context.WishLists.Add(new WishList { Title = "Item2" });
+                //_context.SaveChanges();
+            //}
         }
         [HttpGet]
         public IEnumerable<WishList> GetAll()
         {
-            return _context.WishLists.ToList();
+            return _context.WishLists.Include(wl => wl.Wishes).Include(wl => wl.Accessors).ThenInclude(wla => wla.User).ToList();
         }
         [HttpGet("{id}", Name = "GetWishList")]
         public IActionResult GetById(long id)
