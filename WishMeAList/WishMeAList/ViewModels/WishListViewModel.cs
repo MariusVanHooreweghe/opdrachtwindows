@@ -13,12 +13,29 @@ namespace WishMeAList.ViewModels
     {
         public RelayCommand ToggleCheckedWishCommand { get; set; }
         public WishList wishList { get; set; }
-        public ObservableCollection<Wish> Wishes { get; set; }
+        public ObservableCollection<Wish> _wishes;
+        public ObservableCollection<Wish> Wishes {
+            get { return _wishes; }
+            set { _wishes = value; RaisePropertyChanged("Wishes"); }
+        }
+        public RelayCommand AddWishCommand { get; set; }
+        private NavigatorViewModel _parent { get; set; }
 
-        public WishListViewModel(WishList wishList)
+
+        public WishListViewModel(WishList wishList, NavigatorViewModel parent)
         {
+            this.wishList = wishList;
+            this._parent = parent;
             Wishes = new ObservableCollection<Wish>(wishList.Wishes);
             ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
+            AddWishCommand = new RelayCommand(_ => AddWish());
+        }
+
+
+
+        private void AddWish()
+        {
+            this._parent.CurrentData = new AddWishViewModel(wishList, _parent);
         }
 
         private void ToggleCheckedWish(object wishID)

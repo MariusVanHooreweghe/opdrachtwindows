@@ -5,14 +5,16 @@
     xmlns:local="using:WishMeAList.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:WishMeAList.ViewModels"
     mc:Ignorable="d">
+
 
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
             <TextBlock Text="My WishLists" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding WishLists}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
+            <ListView ItemsSource="{Binding WishLists}" SelectedItem="{Binding WishList, Mode=TwoWay}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                <ListView.ItemTemplate >
+                    <DataTemplate >
                         <StackPanel>
                             <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}"/>
                             <TextBlock Text="{Binding DateOfEvent}" FontSize="{ThemeResource ListViewHeaderItemThemeFontSize}"/>

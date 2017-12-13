@@ -11,11 +11,11 @@ using WishMeAList.Utils;
 
 namespace WishMeAList.ViewModels
 {
-    public class AddWishListViewModel : ViewModelBase, INotifyPropertyChanged
+    public class AddWishListViewModel : ViewModelBase
     {
         public ObservableCollection<WishList> WishLists { get; set; }
         public WishList WishList { get; set; }
-        public String _title;
+        private String _title;
 
         public DateTime _dateOfEvent { get; set; }
         public DateTimeOffset DateOfEvent {
@@ -36,6 +36,7 @@ namespace WishMeAList.ViewModels
         {
             this._parent = parent;
             this.WishLists = WishLists;
+            _dateOfEvent = DateTime.Today;
             ConfirmWishListCommand = new RelayCommand(_ => ConfirmWishList());
         }
 
@@ -44,10 +45,12 @@ namespace WishMeAList.ViewModels
             WishList = new WishList
             {
                 Title = this.Title,
-                DateOfEvent = this._dateOfEvent
+                DateOfEvent = this._dateOfEvent,
+                Wishes = new Collection<Wish>()
             };
             WishLists.Add(this.WishList);
 
+            this._parent.WishListsOwning = WishLists.ToList();
             this._parent.CurrentData = new WishListsViewModel(WishLists.ToList(), this._parent);
         
         }

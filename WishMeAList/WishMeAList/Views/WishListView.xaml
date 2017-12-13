@@ -7,7 +7,23 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
+    <ScrollViewer HorizontalContentAlignment="Stretch">
+        <StackPanel>
+            <TextBlock Text="My Wishes" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <ListView ItemsSource="{Binding Wishes}">
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <StackPanel>
+                            <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                            <TextBlock Text="{Binding Categorie}" FontSize="{ThemeResource ListViewHeaderItemThemeFontSize}"/>
+                            <TextBlock Text="{Binding Description}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Content="Add Wish" Command="{Binding AddWishCommand}"/>
+        </StackPanel>
+    </ScrollViewer>
 </Page>
+
+

@@ -31,6 +31,9 @@
         <DataTemplate x:Key="AddWishListViewModel">
             <view:AddWishListView/>
         </DataTemplate>
+        <DataTemplate x:Key="AddWishViewModel">
+            <view:AddWishView/>
+        </DataTemplate>
 
     </Application.Resources>
 
