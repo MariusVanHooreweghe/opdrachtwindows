@@ -34,12 +34,12 @@ namespace WishMeAList.ViewModels
 
         private void ShowWishlistsOwning()
         {
-            CurrentData = new WishListsViewModel(WishListsOwning);
+            CurrentData = new WishListsViewModel(WishListsOwning, this);
         }
 
         private void ShowWishlistsAccessing()
         {
-            CurrentData = new WishListsViewModel(WishListsAccessing);
+            CurrentData = new WishListsViewModel(WishListsAccessing, this);
         }
 
         private void ShowWishesBuying()

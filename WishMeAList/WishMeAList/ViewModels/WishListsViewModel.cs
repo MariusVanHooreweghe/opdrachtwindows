@@ -16,9 +16,13 @@ namespace WishMeAList.ViewModels
         public ObservableCollection<WishList> WishLists { get; set; }
         public RelayCommand AddWishListCommand { get; set; }
         public RelayCommand OpenWishListCommand { get; set; }
+        private NavigatorViewModel _parent { get; set; }
 
-        public WishListsViewModel(List<WishList> wishLists)
+
+
+        public WishListsViewModel(List<WishList> wishLists, NavigatorViewModel parent)
         {
+            this._parent = parent;
             WishLists = new ObservableCollection<WishList>(wishLists);
             AddWishListCommand = new RelayCommand(_ => ShowAddWishList());
             OpenWishListCommand = new RelayCommand((param) => OpenWishList(param));
@@ -26,7 +30,7 @@ namespace WishMeAList.ViewModels
 
         private void ShowAddWishList()
         {
-
+           this._parent.CurrentData = new AddWishListViewModel(WishLists, this._parent);
         }
 
         private void OpenWishList(object wishListID)

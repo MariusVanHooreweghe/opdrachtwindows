@@ -22,6 +22,7 @@ namespace WishMeAList.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+
         protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
