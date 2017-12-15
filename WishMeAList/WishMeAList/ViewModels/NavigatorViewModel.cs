@@ -63,12 +63,18 @@ namespace WishMeAList.ViewModels
             User ThisUser = new User {
                 UserID = 2,
                 FirstName = "Ruben",
-                LastName = "Standaert"
+                LastName = "Standaert",
+                WishListsAccessing = new Collection<WishList>(),
+                WishListsOwning = new Collection<WishList>(),
+                WishesBuying = new Collection<Wish>()
             };
             User OtherUser = new User {
                 UserID = 1,
                 FirstName = "Thibault",
-                LastName = "Gobert"
+                LastName = "Gobert",
+                WishListsAccessing = new Collection<WishList>(),
+                WishListsOwning = new Collection<WishList>(),
+                WishesBuying = new Collection<Wish>()
             };
 
             Collection<User> ThisUserInACollection = new Collection<User>();

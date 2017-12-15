@@ -17,6 +17,21 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+
+            <ScrollViewer HorizontalContentAlignment="Stretch" Visibility="{Binding InviteMoreFriendsVisibility}">
+                <StackPanel>
+                    <TextBlock Text="Invite more friends:"/>
+                    <ListView SelectionMode="Multiple" ItemsSource="{Binding OtherFriends}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                        <ListView.ItemTemplate >
+                            <DataTemplate >
+                                <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button Content="Add accessors" Command="{Binding AddAccessorsCommand}"/>
+                </StackPanel>
+            </ScrollViewer>
+
         </StackPanel>
     </ScrollViewer>
 </Page>
