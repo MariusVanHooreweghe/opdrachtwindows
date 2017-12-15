@@ -20,6 +20,7 @@ namespace WishMeAList.ViewModels
         public RelayCommand ShowWishlistsOwningCommand { get; set; }
         public RelayCommand ShowWishlistsAccessingCommand { get; set; }
         public RelayCommand ShowWishesBuyingCommand { get; set; }
+        public RelayCommand ShowFriendsCommand { get; set; }
 
         public NavigatorViewModel()
         {
@@ -29,6 +30,7 @@ namespace WishMeAList.ViewModels
             ShowWishlistsOwningCommand = new RelayCommand(_ => ShowWishlistsOwning());
             ShowWishlistsAccessingCommand = new RelayCommand(_ => ShowWishlistsAccessing());
             ShowWishesBuyingCommand = new RelayCommand(_ => ShowWishesBuying());
+            ShowFriendsCommand = new RelayCommand(_ => ShowFriends());
             ShowWishlistsOwning();
         }
 
@@ -45,6 +47,11 @@ namespace WishMeAList.ViewModels
         private void ShowWishesBuying()
         {
             CurrentData = new WishesBuyingViewModel();
+        }
+
+        private void ShowFriends()
+        {
+            CurrentData = new FriendsViewModel(this);
         }
 
         // Dummy data

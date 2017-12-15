@@ -46,6 +46,9 @@
         <DataTemplate x:Key="AccessorsAccessingViewModel">
             <view:AccessorsAccessingView/>
         </DataTemplate>
+        <DataTemplate x:Key="FriendsViewModel">
+            <view:FriendsView/>
+        </DataTemplate>
 
     </Application.Resources>
 
