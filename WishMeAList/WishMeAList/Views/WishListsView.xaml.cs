@@ -34,12 +34,5 @@ namespace WishMeAList.Views
 
         }
 
-        public void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            WishListsViewModel vm = DataContext as WishListsViewModel;
-            vm.ListView_ItemClick(sender, e);
-        }
-
-
     }
 }

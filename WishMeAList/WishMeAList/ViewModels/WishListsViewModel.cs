@@ -14,12 +14,20 @@ namespace WishMeAList.ViewModels
     public class WishListsViewModel : ViewModelBase
     {
         private Collection<WishList> _wishLists { get; set; }
+        private WishList _wishList;
+        public WishList WishList {
+            get { return _wishList; }
+            set { _wishList = value; RaisePropertyChanged("WishList"); }
+        }
         public ObservableCollection<WishList> WishLists
         {
             get { return new ObservableCollection<WishList>(_wishLists); }
             set { _wishLists = value; RaisePropertyChanged("WishLists"); }
         }
         public RelayCommand AddWishListCommand { get; set; }
+        public RelayCommand DeleteWishListCommand { get; set; }
+        public RelayCommand ViewWishesCommand { get; set; }
+
         private NavigatorViewModel _parent { get; set; }
 
 
@@ -29,19 +37,27 @@ namespace WishMeAList.ViewModels
             WishLists = new ObservableCollection<WishList>(UserManager.CurrentUser.WishListsOwning);
           
             AddWishListCommand = new RelayCommand(_ => ShowAddWishList());
+            DeleteWishListCommand = new RelayCommand(_ => DeleteWishList());
+            ViewWishesCommand = new RelayCommand(_ => ViewWishes());
         }
 
         private void ShowAddWishList()
         {
            this._parent.CurrentData = new AddWishListViewModel(WishLists, this._parent);
         }
+        private void DeleteWishList()
+        {
+            // WishLists.Remove(WishLists.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault());
+            _wishLists.Remove(WishList);
+            UserManager.CurrentUser.WishListsOwning = _wishLists;
+            RaisePropertyChanged("WishLists");
+        }
   
 
-        public void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        public void ViewWishes()
         {
-            WishList _wishList = (WishList) e.ClickedItem;
             this._parent.CurrentData = new WishListViewModel(WishLists.Where(val => 
-                    val.WishListID == _wishList.WishListID).SingleOrDefault(), this._parent);
+                    val.WishListID == WishList.WishListID).SingleOrDefault(), this._parent);
         }
 
     }
