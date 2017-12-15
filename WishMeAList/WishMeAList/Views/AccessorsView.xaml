@@ -12,8 +12,8 @@
             <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
             <ListView ItemsSource="{Binding Accessors}">
                 <ListView.ItemTemplate >
-                    <DataTemplate >
-                        <TextBlock Text="{Binding Name}" Style="{ThemeResource ListViewHeaderItemThemeFontSize}"/>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

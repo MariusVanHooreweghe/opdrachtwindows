@@ -13,8 +13,23 @@
             <TextBlock TextWrapping="Wrap" Text="Make a new Wishlist" FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
             <StackPanel BorderThickness="1" BorderBrush="Gray" Padding="20">
                 <TextBox x:Name="Title" Text="{Binding Path=Title, Mode=TwoWay}"  PlaceholderText="Name of the wishlist" Margin="0,0,0,20"></TextBox>
-                <DatePicker x:Name="Datepicker" Header="Date of the event"  Date="{Binding Path=DateOfEvent, Mode=TwoWay}" />
-                <Button Content="Make this wishlist" Command="{Binding ConfirmWishListCommand}"/>
+                <DatePicker x:Name="Datepicker" Header="Date of the event"  Date="{Binding Path=DateOfEvent, Mode=TwoWay}" Margin="0,0,0,10" />
+
+                <TextBlock Text="Invite some friends:"/>
+                <ScrollViewer HorizontalContentAlignment="Stretch">
+                    <StackPanel>
+                        <ListView SelectionMode="Multiple" ItemsSource="{Binding CurrentUser.Friends}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                            <ListView.ItemTemplate >
+                                <DataTemplate >
+                                    <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackPanel>
+                </ScrollViewer>
+                
+
+                <Button Content="Make this wishlist" Command="{Binding ConfirmWishListCommand}" Margin="0,10,0,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

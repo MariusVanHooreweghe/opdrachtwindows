@@ -66,6 +66,8 @@ namespace WishMeAList.ViewModels
 
             Collection<User> ThisUserInACollection = new Collection<User>();
             ThisUserInACollection.Add(ThisUser);
+            Collection<User> OtherUserInACollection = new Collection<User>();
+            OtherUserInACollection.Add(OtherUser);
 
             Wish wish1 = new Wish
             {
@@ -142,6 +144,11 @@ namespace WishMeAList.ViewModels
             WishListsOwning.Add(wishList2);
             WishListsAccessing = new List<WishList>();
             WishListsAccessing.Add(wishList1);
+
+            ThisUser.Friends = OtherUserInACollection;
+            OtherUser.Friends = ThisUserInACollection;
+
+            UserManager.CurrentUser = ThisUser;
         }
         // ---------------------
     }

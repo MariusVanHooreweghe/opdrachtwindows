@@ -95,6 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\UserManager.cs" />
     <Compile Include="ViewModels\AccessorsAccessingViewModel.cs" />
     <Compile Include="ViewModels\AccessorsViewModel.cs" />
     <Compile Include="ViewModels\AddWishListViewModel.cs" />

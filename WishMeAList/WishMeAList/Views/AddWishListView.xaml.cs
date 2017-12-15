@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WishMeAList.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +26,12 @@ namespace WishMeAList.Views
         public AddWishListView()
         {
             this.InitializeComponent();
+        }
+
+        public void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            AddWishListViewModel vm = DataContext as AddWishListViewModel;
+            vm.ListView_ItemClick(sender, e);
         }
     }
 }
