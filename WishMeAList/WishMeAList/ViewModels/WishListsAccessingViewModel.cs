@@ -19,10 +19,10 @@ namespace WishMeAList.ViewModels
         }
         private NavigatorViewModel _parent { get; set; }
 
-        public WishListsAccessingViewModel(List<WishList> wishLists, NavigatorViewModel parent)
+        public WishListsAccessingViewModel( NavigatorViewModel parent)
         {
             this._parent = parent;
-            _wishLists = new ObservableCollection<WishList>(wishLists);
+            _wishLists = new ObservableCollection<WishList>(UserManager.CurrentUser.WishListsAccessing);
         }
 
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)

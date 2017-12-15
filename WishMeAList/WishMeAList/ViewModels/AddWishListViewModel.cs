@@ -55,8 +55,8 @@ namespace WishMeAList.ViewModels
             };
             WishLists.Add(this.WishList);
 
-            this._parent.WishListsOwning = WishLists.ToList();
-            this._parent.CurrentData = new WishListsViewModel(WishLists.ToList(), this._parent);
+            this._parent.WishListsOwning = WishLists;
+            this._parent.CurrentData = new WishListsViewModel(this._parent);
         
         }
 
