@@ -11,14 +11,50 @@ namespace WishMeAList.ViewModels
 {
     public class WishListViewModel : ViewModelBase
     {
-        public RelayCommand ToggleCheckedWishCommand { get; set; }
-        public WishList wishList { get; set; }
-        public ObservableCollection<Wish> Wishes { get; set; }
+        public WishList WishList { get; set; }
 
-        public WishListViewModel(WishList wishList)
+        private Collection<Wish> _wishes;
+        public ObservableCollection<Wish> Wishes
         {
-            Wishes = new ObservableCollection<Wish>(wishList.Wishes);
+            get { return new ObservableCollection<Wish>(_wishes); }
+            set { _wishes = value; RaisePropertyChanged("Wishes"); }
+        }
+        private Wish _wishToDelete { get; set; }
+        public Wish WishToDelete {
+            get { return _wishToDelete; }
+            set { _wishToDelete = value; RaisePropertyChanged("WishToDelete"); }
+        }
+
+        public RelayCommand AddWishCommand { get; set; }
+        public RelayCommand DeleteWishCommand { get; set; }
+        public RelayCommand OpenAccessorsCommand { get; set; }
+        public RelayCommand ToggleCheckedWishCommand { get; set; }
+
+        private NavigatorViewModel _parent { get; set; }
+
+
+        public WishListViewModel(WishList wishList, NavigatorViewModel parent)
+        {
+            this.WishList = wishList;
+            this._parent = parent;
+            this._wishes = new ObservableCollection<Wish>(wishList.Wishes);
+
             ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
+            AddWishCommand = new RelayCommand(_ => AddWish());
+            DeleteWishCommand = new RelayCommand(_ => DeleteWish());
+            OpenAccessorsCommand = new RelayCommand(_ => OpenAccessors());
+        }
+
+        private void AddWish()
+        {
+            this._parent.CurrentData = new AddWishViewModel(WishList, _parent);
+        }
+
+        private void DeleteWish()
+        {
+            _wishes.Remove(WishToDelete);
+            UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
+            RaisePropertyChanged("Wishes");
         }
 
         private void ToggleCheckedWish(object wishID)
@@ -36,6 +72,11 @@ namespace WishMeAList.ViewModels
                 // wish.Buyer = null;
                 // currentUser.WishedBuying.Remove(w => w.wishID = wish.wishID);
             }
+        }
+
+        private void OpenAccessors()
+        {
+            this._parent.CurrentData = new AccessorsViewModel(this);
         }
     }
 

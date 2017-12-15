@@ -20,6 +20,7 @@ namespace WishMeAList.ViewModels
         public RelayCommand ShowWishlistsOwningCommand { get; set; }
         public RelayCommand ShowWishlistsAccessingCommand { get; set; }
         public RelayCommand ShowWishesBuyingCommand { get; set; }
+        public RelayCommand ShowFriendsCommand { get; set; }
 
         public NavigatorViewModel()
         {
@@ -29,17 +30,18 @@ namespace WishMeAList.ViewModels
             ShowWishlistsOwningCommand = new RelayCommand(_ => ShowWishlistsOwning());
             ShowWishlistsAccessingCommand = new RelayCommand(_ => ShowWishlistsAccessing());
             ShowWishesBuyingCommand = new RelayCommand(_ => ShowWishesBuying());
+            ShowFriendsCommand = new RelayCommand(_ => ShowFriends());
             ShowWishlistsOwning();
         }
 
         private void ShowWishlistsOwning()
         {
-            CurrentData = new WishListsViewModel(WishListsOwning, this);
+            CurrentData = new WishListsViewModel( this);
         }
 
         private void ShowWishlistsAccessing()
         {
-            CurrentData = new WishListsViewModel(WishListsAccessing, this);
+            CurrentData = new WishListsAccessingViewModel( this);
         }
 
         private void ShowWishesBuying()
@@ -47,26 +49,43 @@ namespace WishMeAList.ViewModels
             CurrentData = new WishesBuyingViewModel();
         }
 
+        private void ShowFriends()
+        {
+            CurrentData = new FriendsViewModel(this);
+        }
+
         // Dummy data
-        public List<WishList> WishListsOwning { get; set; }
-        public List<WishList> WishListsAccessing { get; set; }
+        public Collection<WishList> WishListsOwning { get; set; }
+        public Collection<WishList> WishListsAccessing { get; set; }
 
         public void initData()
         {
             User ThisUser = new User {
-                UserID = 2
+                UserID = 2,
+                FirstName = "Ruben",
+                LastName = "Standaert",
+                WishListsAccessing = new Collection<WishList>(),
+                WishListsOwning = new Collection<WishList>(),
+                WishesBuying = new Collection<Wish>()
             };
             User OtherUser = new User {
-                UserID = 1
+                UserID = 1,
+                FirstName = "Thibault",
+                LastName = "Gobert",
+                WishListsAccessing = new Collection<WishList>(),
+                WishListsOwning = new Collection<WishList>(),
+                WishesBuying = new Collection<Wish>()
             };
 
             Collection<User> ThisUserInACollection = new Collection<User>();
             ThisUserInACollection.Add(ThisUser);
+            Collection<User> OtherUserInACollection = new Collection<User>();
+            OtherUserInACollection.Add(OtherUser);
 
             Wish wish1 = new Wish
             {
                 Buyer = OtherUser,
-                Categorie = WishCategorie.KEUKEN,
+                Categorie = WishCategorie.KITCHEN,
                 Description = "Het liefst een gele.",
                 IsChecked = false,
                 Title = "Mixer",
@@ -76,7 +95,7 @@ namespace WishMeAList.ViewModels
 
             Wish wish2 = new Wish
             {
-                Categorie = WishCategorie.KEUKEN,
+                Categorie = WishCategorie.KITCHEN,
                 Description = "Verras ons!",
                 IsChecked = false,
                 Title = "Leuke set handdoeken",
@@ -86,7 +105,7 @@ namespace WishMeAList.ViewModels
 
             Wish wish3 = new Wish
             {
-                Categorie = WishCategorie.LIVING,
+                Categorie = WishCategorie.LIVING_ROOM,
                 Description = "Een staanlamp voor in de hoek, achter de zetel.",
                 IsChecked = false,
                 Title = "Staanlamp",
@@ -134,10 +153,22 @@ namespace WishMeAList.ViewModels
                 Title = "Babyborrel"
             };
 
-            WishListsOwning = new List<WishList>();
+            WishListsOwning = new Collection<WishList>();
             WishListsOwning.Add(wishList2);
-            WishListsAccessing = new List<WishList>();
-            WishListsOwning.Add(wishList1);
+            WishListsAccessing = new Collection<WishList>();
+            WishListsAccessing.Add(wishList1);
+
+            ThisUser.Friends = OtherUserInACollection;
+            OtherUser.Friends = ThisUserInACollection;
+
+            UserManager.CurrentUser = ThisUser;
+            UserManager.CurrentUser.WishListsOwning =WishListsOwning;
+            UserManager.CurrentUser.WishListsAccessing = WishListsAccessing;
+
+            OtherUser.WishListsOwning = WishListsAccessing;
+
+
+
         }
         // ---------------------
     }

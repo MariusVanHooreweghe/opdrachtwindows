@@ -21,16 +21,16 @@ namespace WishMeAList.Views
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class AddWishListView : Page
+    public sealed partial class AccessorsView : Page
     {
-        public AddWishListView()
+        public AccessorsView()
         {
             this.InitializeComponent();
         }
 
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            AddWishListViewModel vm = DataContext as AddWishListViewModel;
+            AccessorsViewModel vm = DataContext as AccessorsViewModel;
             vm.ListView_ItemClick(sender, e);
         }
     }

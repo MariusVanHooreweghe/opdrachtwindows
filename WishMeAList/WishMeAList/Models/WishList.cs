@@ -22,6 +22,11 @@ namespace WishMeAList.Models
 
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public WishList()
+        {
+            Wishes = new Collection<Wish>();
+            Accessors = new Collection<User>();
+        }
 
         protected void RaisePropertyChanged([CallerMemberName]string propertyName = "")
         {

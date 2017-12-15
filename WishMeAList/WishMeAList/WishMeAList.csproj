@@ -95,7 +95,12 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utils\UserManager.cs" />
+    <Compile Include="ViewModels\AccessorsAccessingViewModel.cs" />
+    <Compile Include="ViewModels\AccessorsViewModel.cs" />
     <Compile Include="ViewModels\AddWishListViewModel.cs" />
+    <Compile Include="ViewModels\AddWishViewModel.cs" />
+    <Compile Include="ViewModels\FriendsViewModel.cs" />
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NavigatorViewModel.cs" />
@@ -108,10 +113,24 @@
     <Compile Include="Utils\RelayCommand.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="ViewModels\WishesBuyingViewModel.cs" />
+    <Compile Include="ViewModels\WishListAccessingViewModel.cs" />
+    <Compile Include="ViewModels\WishListsAccessingViewModel.cs" />
     <Compile Include="ViewModels\WishListsViewModel.cs" />
     <Compile Include="ViewModels\WishListViewModel.cs" />
+    <Compile Include="Views\AccessorsAccessingView.xaml.cs">
+      <DependentUpon>AccessorsAccessingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AccessorsView.xaml.cs">
+      <DependentUpon>AccessorsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AddWishListView.xaml.cs">
       <DependentUpon>AddWishListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AddWishView.xaml.cs">
+      <DependentUpon>AddWishView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\FriendsView.xaml.cs">
+      <DependentUpon>FriendsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\LogInView.xaml.cs">
       <DependentUpon>LogInView.xaml</DependentUpon>
@@ -127,6 +146,12 @@
     </Compile>
     <Compile Include="Views\WishesBuyingView.xaml.cs">
       <DependentUpon>WishesBuyingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WishListAccessingView.xaml.cs">
+      <DependentUpon>WishListAccessingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WishListsAccessingView.xaml.cs">
+      <DependentUpon>WishListsAccessingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\WishListsView.xaml.cs">
       <DependentUpon>WishListsView.xaml</DependentUpon>
@@ -156,7 +181,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\AccessorsAccessingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AccessorsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\AddWishListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AddWishView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FriendsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -177,6 +218,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\WishesBuyingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WishListAccessingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WishListsAccessingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

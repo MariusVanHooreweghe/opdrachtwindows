@@ -28,8 +28,26 @@
         <DataTemplate x:Key="WishListViewModel">
             <view:WishListView/>
         </DataTemplate>
+        <DataTemplate x:Key="WishListAccessingViewModel">
+            <view:WishListAccessingView/>
+        </DataTemplate>
+        <DataTemplate x:Key="WishListsAccessingViewModel">
+            <view:WishListsAccessingView/>
+        </DataTemplate>
         <DataTemplate x:Key="AddWishListViewModel">
             <view:AddWishListView/>
+        </DataTemplate>
+        <DataTemplate x:Key="AddWishViewModel">
+            <view:AddWishView/>
+        </DataTemplate>
+        <DataTemplate x:Key="AccessorsViewModel">
+            <view:AccessorsView/>
+        </DataTemplate>
+        <DataTemplate x:Key="AccessorsAccessingViewModel">
+            <view:AccessorsAccessingView/>
+        </DataTemplate>
+        <DataTemplate x:Key="FriendsViewModel">
+            <view:FriendsView/>
         </DataTemplate>
 
     </Application.Resources>
