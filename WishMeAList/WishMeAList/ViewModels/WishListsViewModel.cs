@@ -27,6 +27,8 @@ namespace WishMeAList.ViewModels
         public RelayCommand AddWishListCommand { get; set; }
         public RelayCommand DeleteWishListCommand { get; set; }
         public RelayCommand ViewWishesCommand { get; set; }
+        public String ViewWishesVisibility { get { return WishLists.Count == 0 ? "Collapsed" : "Visible"; } }
+
 
         private NavigatorViewModel _parent { get; set; }
 
@@ -50,7 +52,8 @@ namespace WishMeAList.ViewModels
             // WishLists.Remove(WishLists.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault());
             _wishLists.Remove(WishList);
             UserManager.CurrentUser.WishListsOwning = _wishLists;
-            RaisePropertyChanged("WishLists");
+            RaisePropertyChanged("WishLists"); 
+            RaisePropertyChanged("ViewWishesVisibility");
         }
   
 
