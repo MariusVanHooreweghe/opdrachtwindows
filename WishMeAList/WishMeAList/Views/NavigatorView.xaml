@@ -11,7 +11,7 @@
         <SplitView.Pane>
             <StackPanel Margin="10,10,0,0">
                 <Button Content="My Wishlists" Command="{Binding ShowWishlistsOwningCommand}" Margin="0,0,0,10" HorizontalAlignment="Left" Width="150"/>
-                <Button Content="Others Wishlists" Command="{Binding ShowWishlistsAccessingCommand}" Margin="0,0,0,10" HorizontalAlignment="Left" Width="150"/>
+                <Button Content="Wishlists following" Command="{Binding ShowWishlistsAccessingCommand}" Margin="0,0,0,10" HorizontalAlignment="Left" Width="150"/>
                 <Button Content="Friends" Command="{Binding ShowFriendsCommand}" Width="150" Margin="0,0,0,10"/>
                 <Button Content="Wishes I'm buying" Command="{Binding ShowWishesBuyingCommand}" Width="150"/>
             </StackPanel>
