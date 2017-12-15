@@ -66,7 +66,7 @@ namespace WishMeAList.ViewModels
             Wish wish1 = new Wish
             {
                 Buyer = OtherUser,
-                Categorie = WishCategorie.KEUKEN,
+                Categorie = WishCategorie.KITCHEN,
                 Description = "Het liefst een gele.",
                 IsChecked = false,
                 Title = "Mixer",
@@ -76,7 +76,7 @@ namespace WishMeAList.ViewModels
 
             Wish wish2 = new Wish
             {
-                Categorie = WishCategorie.KEUKEN,
+                Categorie = WishCategorie.KITCHEN,
                 Description = "Verras ons!",
                 IsChecked = false,
                 Title = "Leuke set handdoeken",
@@ -86,7 +86,7 @@ namespace WishMeAList.ViewModels
 
             Wish wish3 = new Wish
             {
-                Categorie = WishCategorie.LIVING,
+                Categorie = WishCategorie.LIVING_ROOM,
                 Description = "Een staanlamp voor in de hoek, achter de zetel.",
                 IsChecked = false,
                 Title = "Staanlamp",
