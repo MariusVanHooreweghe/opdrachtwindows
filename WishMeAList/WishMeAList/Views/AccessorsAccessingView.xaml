@@ -13,7 +13,7 @@
             <ListView ItemsSource="{Binding Accessors}">
                 <ListView.ItemTemplate >
                     <DataTemplate >
-                        <TextBlock Text="{Binding Name}" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                        <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

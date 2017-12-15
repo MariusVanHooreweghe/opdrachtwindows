@@ -22,7 +22,7 @@
                 </ListView.ItemTemplate>
             </ListView>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Button Content="Add Wish" Command="{Binding AddWishCommand}"/>
+                <Button Content="Add Wish" Command="{Binding AddWishCommand}" Margin="15,0,0,0"/>
                 <Button Content="Accessors" Command="{Binding OpenAccessorsCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
             </StackPanel>
             

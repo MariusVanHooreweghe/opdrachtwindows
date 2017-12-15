@@ -23,7 +23,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Content="Add WishList" Command="{Binding AddWishListCommand}"/>
+            <Button Content="Add WishList" Command="{Binding AddWishListCommand}" Margin="15,0,0,0"/>
         </StackPanel>
     </ScrollViewer>
 </Page>
