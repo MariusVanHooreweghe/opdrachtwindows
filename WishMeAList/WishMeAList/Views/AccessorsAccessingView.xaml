@@ -1,0 +1,22 @@
+﻿<Page
+    x:Class="WishMeAList.Views.AccessorsAccessingView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WishMeAList.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ScrollViewer HorizontalContentAlignment="Stretch">
+        <StackPanel>
+            <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <ListView ItemsSource="{Binding Accessors}">
+                <ListView.ItemTemplate >
+                    <DataTemplate >
+                        <TextBlock Text="{Binding Name}" Style="{ThemeResource HeaderTextBlockStyle}"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

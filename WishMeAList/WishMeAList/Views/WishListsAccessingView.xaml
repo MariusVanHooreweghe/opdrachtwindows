@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="WishMeAList.Views.WishListView"
+    x:Class="WishMeAList.Views.WishListsAccessingView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WishMeAList.Views"
@@ -9,25 +9,18 @@
 
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
-            <TextBlock Text="{Binding WishList.Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding Wishes}">
+            <TextBlock Text="WishLists Accessing" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <ListView ItemsSource="{Binding WishLists}" SelectedItem="{Binding WishList, Mode=TwoWay}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <StackPanel>
                             <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}"/>
-                            <TextBlock Text="{Binding Categorie}" FontSize="{ThemeResource ListViewHeaderItemThemeFontSize}"/>
+                            <TextBlock Text="{Binding DateOfEvent}" FontSize="{ThemeResource ListViewHeaderItemThemeFontSize}"/>
                             <TextBlock Text="{Binding Description}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Button Content="Add Wish" Command="{Binding AddWishCommand}"/>
-                <Button Content="Accessors" Command="{Binding OpenAccessorsCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
-            </StackPanel>
-            
         </StackPanel>
     </ScrollViewer>
 </Page>
-
-

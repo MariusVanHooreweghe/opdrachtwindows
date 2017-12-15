@@ -11,31 +11,34 @@ namespace WishMeAList.ViewModels
 {
     public class WishListViewModel : ViewModelBase
     {
-        public RelayCommand ToggleCheckedWishCommand { get; set; }
-        public WishList wishList { get; set; }
-        public ObservableCollection<Wish> _wishes;
+        public WishList WishList { get; set; }
+        private ObservableCollection<Wish> _wishes;
         public ObservableCollection<Wish> Wishes {
             get { return _wishes; }
             set { _wishes = value; RaisePropertyChanged("Wishes"); }
         }
+
         public RelayCommand AddWishCommand { get; set; }
+        public RelayCommand OpenAccessorsCommand { get; set; }
+        public RelayCommand ToggleCheckedWishCommand { get; set; }
+
         private NavigatorViewModel _parent { get; set; }
 
 
         public WishListViewModel(WishList wishList, NavigatorViewModel parent)
         {
-            this.wishList = wishList;
+            this.WishList = wishList;
             this._parent = parent;
-            Wishes = new ObservableCollection<Wish>(wishList.Wishes);
+            this._wishes = new ObservableCollection<Wish>(wishList.Wishes);
+
             ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
             AddWishCommand = new RelayCommand(_ => AddWish());
+            OpenAccessorsCommand = new RelayCommand(_ => OpenAccessors());
         }
-
-
 
         private void AddWish()
         {
-            this._parent.CurrentData = new AddWishViewModel(wishList, _parent);
+            this._parent.CurrentData = new AddWishViewModel(WishList, _parent);
         }
 
         private void ToggleCheckedWish(object wishID)
@@ -53,6 +56,11 @@ namespace WishMeAList.ViewModels
                 // wish.Buyer = null;
                 // currentUser.WishedBuying.Remove(w => w.wishID = wish.wishID);
             }
+        }
+
+        private void OpenAccessors()
+        {
+            this._parent.CurrentData = new AccessorsViewModel(this);
         }
     }
 

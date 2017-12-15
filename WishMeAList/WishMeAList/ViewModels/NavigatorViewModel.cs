@@ -39,7 +39,7 @@ namespace WishMeAList.ViewModels
 
         private void ShowWishlistsAccessing()
         {
-            CurrentData = new WishListsViewModel(WishListsAccessing, this);
+            CurrentData = new WishListsAccessingViewModel(WishListsAccessing, this);
         }
 
         private void ShowWishesBuying()
@@ -54,10 +54,14 @@ namespace WishMeAList.ViewModels
         public void initData()
         {
             User ThisUser = new User {
-                UserID = 2
+                UserID = 2,
+                FirstName = "Ruben",
+                LastName = "Standaert"
             };
             User OtherUser = new User {
-                UserID = 1
+                UserID = 1,
+                FirstName = "Thibault",
+                LastName = "Gobert"
             };
 
             Collection<User> ThisUserInACollection = new Collection<User>();
@@ -137,7 +141,7 @@ namespace WishMeAList.ViewModels
             WishListsOwning = new List<WishList>();
             WishListsOwning.Add(wishList2);
             WishListsAccessing = new List<WishList>();
-            WishListsOwning.Add(wishList1);
+            WishListsAccessing.Add(wishList1);
         }
         // ---------------------
     }
