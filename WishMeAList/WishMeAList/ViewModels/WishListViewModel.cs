@@ -12,9 +12,11 @@ namespace WishMeAList.ViewModels
     public class WishListViewModel : ViewModelBase
     {
         public WishList WishList { get; set; }
-        private ObservableCollection<Wish> _wishes;
-        public ObservableCollection<Wish> Wishes {
-            get { return _wishes; }
+
+        private Collection<Wish> _wishes;
+        public ObservableCollection<Wish> Wishes
+        {
+            get { return new ObservableCollection<Wish>(_wishes); }
             set { _wishes = value; RaisePropertyChanged("Wishes"); }
         }
 

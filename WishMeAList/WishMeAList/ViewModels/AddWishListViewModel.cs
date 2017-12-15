@@ -16,7 +16,6 @@ namespace WishMeAList.ViewModels
     {
         public ObservableCollection<WishList> WishLists { get; set; }
         public WishList WishList { get; set; }
-        private String _title;
         public User CurrentUser { get { return UserManager.CurrentUser; } }
         public Collection<User> SelectedUsers { get; set; }
 
@@ -26,6 +25,7 @@ namespace WishMeAList.ViewModels
             set { _dateOfEvent = value.DateTime; RaisePropertyChanged("DateOfEvent"); }
         }
 
+        private String _title;
         public String Title {
             get { return _title; }
             set { _title = value; RaisePropertyChanged("Title"); }

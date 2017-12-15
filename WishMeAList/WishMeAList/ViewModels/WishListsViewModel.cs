@@ -13,7 +13,12 @@ namespace WishMeAList.ViewModels
 {
     public class WishListsViewModel : ViewModelBase
     {
-        public ObservableCollection<WishList> WishLists { get; set; }
+        private Collection<WishList> _wishLists { get; set; }
+        public ObservableCollection<WishList> WishLists
+        {
+            get { return new ObservableCollection<WishList>(_wishLists); }
+            set { _wishLists = value; RaisePropertyChanged("WishLists"); }
+        }
         public RelayCommand AddWishListCommand { get; set; }
         private NavigatorViewModel _parent { get; set; }
 

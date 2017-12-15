@@ -12,13 +12,17 @@ namespace WishMeAList.ViewModels
 {
     public class WishListsAccessingViewModel : ViewModelBase
     {
-        public ObservableCollection<WishList> WishLists { get; set; }
+        private Collection<WishList> _wishLists { get; set; }
+        public ObservableCollection<WishList> WishLists {
+            get { return new ObservableCollection<WishList>(_wishLists); }
+            set { _wishLists = value; RaisePropertyChanged("WishLists"); }
+        }
         private NavigatorViewModel _parent { get; set; }
 
         public WishListsAccessingViewModel(List<WishList> wishLists, NavigatorViewModel parent)
         {
             this._parent = parent;
-            WishLists = new ObservableCollection<WishList>(wishLists);
+            _wishLists = new ObservableCollection<WishList>(wishLists);
         }
 
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
