@@ -9,7 +9,7 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" HorizontalAlignment="Center" VerticalAlignment="Top">
         <StackPanel>
-            <TextBlock TextWrapping="Wrap" Text="Make a new Wishlist" FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
+            <TextBlock TextWrapping="Wrap" Text="Make a Wish" FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
             <StackPanel BorderThickness="1" BorderBrush="Gray" Padding="20">
                 <TextBox x:Name="Title" Text="{Binding Path=Title, Mode=TwoWay}"  PlaceholderText="Name of the wish" Margin="0,0,0,20"></TextBox>
                 <TextBox x:Name="Description" Text="{Binding Path=Description, Mode=TwoWay}"  PlaceholderText="Add a description" Margin="0,0,0,20"></TextBox>
