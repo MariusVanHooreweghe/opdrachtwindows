@@ -19,8 +19,14 @@ namespace WishMeAList.ViewModels
             get { return new ObservableCollection<Wish>(_wishes); }
             set { _wishes = value; RaisePropertyChanged("Wishes"); }
         }
+        private Wish _wishToDelete { get; set; }
+        public Wish WishToDelete {
+            get { return _wishToDelete; }
+            set { _wishToDelete = value; RaisePropertyChanged("WishToDelete"); }
+        }
 
         public RelayCommand AddWishCommand { get; set; }
+        public RelayCommand DeleteWishCommand { get; set; }
         public RelayCommand OpenAccessorsCommand { get; set; }
         public RelayCommand ToggleCheckedWishCommand { get; set; }
 
@@ -35,12 +41,20 @@ namespace WishMeAList.ViewModels
 
             ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
             AddWishCommand = new RelayCommand(_ => AddWish());
+            DeleteWishCommand = new RelayCommand(_ => DeleteWish());
             OpenAccessorsCommand = new RelayCommand(_ => OpenAccessors());
         }
 
         private void AddWish()
         {
             this._parent.CurrentData = new AddWishViewModel(WishList, _parent);
+        }
+
+        private void DeleteWish()
+        {
+            _wishes.Remove(WishToDelete);
+            UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
+            RaisePropertyChanged("Wishes");
         }
 
         private void ToggleCheckedWish(object wishID)

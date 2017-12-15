@@ -10,7 +10,7 @@
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
             <TextBlock Text="{Binding WishList.Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding Wishes}">
+            <ListView ItemsSource="{Binding Wishes}" SelectedItem="{Binding WishToDelete, Mode=TwoWay}">
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <StackPanel>
@@ -23,6 +23,7 @@
             </ListView>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                 <Button Content="Add Wish" Command="{Binding AddWishCommand}" Margin="15,0,0,0"/>
+                <Button Content="Delete Wish" Command="{Binding DeleteWishCommand}" Margin="15,0,0,0"/>
                 <Button Content="Accessors" Command="{Binding OpenAccessorsCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
             </StackPanel>
             

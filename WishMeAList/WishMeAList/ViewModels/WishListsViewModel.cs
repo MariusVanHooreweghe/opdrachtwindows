@@ -23,10 +23,11 @@ namespace WishMeAList.ViewModels
         private NavigatorViewModel _parent { get; set; }
 
 
-        public WishListsViewModel(List<WishList> wishLists, NavigatorViewModel parent)
+        public WishListsViewModel( NavigatorViewModel parent)
         {
             this._parent = parent;
-            WishLists = new ObservableCollection<WishList>(wishLists);
+            WishLists = new ObservableCollection<WishList>(UserManager.CurrentUser.WishListsOwning);
+          
             AddWishListCommand = new RelayCommand(_ => ShowAddWishList());
         }
 

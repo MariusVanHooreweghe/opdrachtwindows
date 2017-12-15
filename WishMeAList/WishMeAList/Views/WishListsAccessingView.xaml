@@ -9,7 +9,7 @@
 
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
-            <TextBlock Text="WishLists Accessing" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <TextBlock Text="Wishlists following" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
             <ListView ItemsSource="{Binding WishLists}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                 <ListView.ItemTemplate >
                     <DataTemplate >

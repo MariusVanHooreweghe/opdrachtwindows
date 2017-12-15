@@ -36,12 +36,12 @@ namespace WishMeAList.ViewModels
 
         private void ShowWishlistsOwning()
         {
-            CurrentData = new WishListsViewModel(WishListsOwning, this);
+            CurrentData = new WishListsViewModel( this);
         }
 
         private void ShowWishlistsAccessing()
         {
-            CurrentData = new WishListsAccessingViewModel(WishListsAccessing, this);
+            CurrentData = new WishListsAccessingViewModel( this);
         }
 
         private void ShowWishesBuying()
@@ -55,8 +55,8 @@ namespace WishMeAList.ViewModels
         }
 
         // Dummy data
-        public List<WishList> WishListsOwning { get; set; }
-        public List<WishList> WishListsAccessing { get; set; }
+        public Collection<WishList> WishListsOwning { get; set; }
+        public Collection<WishList> WishListsAccessing { get; set; }
 
         public void initData()
         {
@@ -153,15 +153,22 @@ namespace WishMeAList.ViewModels
                 Title = "Babyborrel"
             };
 
-            WishListsOwning = new List<WishList>();
+            WishListsOwning = new Collection<WishList>();
             WishListsOwning.Add(wishList2);
-            WishListsAccessing = new List<WishList>();
+            WishListsAccessing = new Collection<WishList>();
             WishListsAccessing.Add(wishList1);
 
             ThisUser.Friends = OtherUserInACollection;
             OtherUser.Friends = ThisUserInACollection;
 
             UserManager.CurrentUser = ThisUser;
+            UserManager.CurrentUser.WishListsOwning =WishListsOwning;
+            UserManager.CurrentUser.WishListsAccessing = WishListsAccessing;
+
+            OtherUser.WishListsOwning = WishListsAccessing;
+
+
+
         }
         // ---------------------
     }
