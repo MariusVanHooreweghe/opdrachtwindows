@@ -52,6 +52,9 @@
         <DataTemplate x:Key="NotificationsViewModel">
             <view:NotificationsView/>
         </DataTemplate>
+        <DataTemplate x:Key="FriendViewModel">
+            <view:FriendView/>
+        </DataTemplate>
 
     </Application.Resources>
 
