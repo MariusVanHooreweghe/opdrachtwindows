@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using WishMeAList.Models;
 using WishMeAList.Utils;
 
@@ -54,10 +55,26 @@ namespace WishMeAList.ViewModels
 
         private void DeleteWish()
         {
+            if(WishToDelete == null)
+            {
+                DisplayDialog();
+                return;
+            }
             _wishes.Remove(WishToDelete);
             UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
             RaisePropertyChanged("Wishes");
             RaisePropertyChanged("ViewWishesVisibility");
+        }
+
+        private async void DisplayDialog()
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "No Wish selected",
+                Content = "Please select a Wish and try again.",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
         private void ToggleCheckedWish(object wishID)
