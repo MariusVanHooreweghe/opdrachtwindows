@@ -8,6 +8,7 @@ namespace WishMeAList.Models
 {
     public enum WishCategorie
     {
+        DEFAULT,
         MUSIC_AND_FILMS,
         MULTIMEDIA,
         CLOTHES,
