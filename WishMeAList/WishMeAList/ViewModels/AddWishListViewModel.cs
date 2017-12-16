@@ -55,6 +55,7 @@ namespace WishMeAList.ViewModels
             };
             WishLists.Add(this.WishList);
             UserManager.CurrentUser.WishListsOwning = WishLists;
+
             this._parent.CurrentData = new WishListsViewModel(this._parent);
         
         }
