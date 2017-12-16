@@ -31,6 +31,8 @@ namespace WishMeAList.ViewModels
         public RelayCommand ToggleCheckedWishCommand { get; set; }
 
         private NavigatorViewModel _parent { get; set; }
+        public String ViewWishesVisibility { get { return Wishes.Count == 0 ? "Collapsed" : "Visible"; } }
+
 
 
         public WishListViewModel(WishList wishList, NavigatorViewModel parent)
@@ -55,6 +57,7 @@ namespace WishMeAList.ViewModels
             _wishes.Remove(WishToDelete);
             UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
             RaisePropertyChanged("Wishes");
+            RaisePropertyChanged("ViewWishesVisibility");
         }
 
         private void ToggleCheckedWish(object wishID)

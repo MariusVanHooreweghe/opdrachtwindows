@@ -7,21 +7,27 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
             <TextBlock Text="{Binding WishList.Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding Wishes}">
+            <ListView ItemsSource="{Binding Wishes}" SelectedItem="{Binding Wish, Mode=TwoWay}">
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <StackPanel>
                             <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}"/>
                             <TextBlock Text="{Binding Categorie}" FontSize="{ThemeResource ListViewHeaderItemThemeFontSize}"/>
                             <TextBlock Text="{Binding Description}" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsEnabled="false"  IsChecked="{Binding IsChecked, Mode=TwoWay}"  />
+                                <TextBlock Text="Gekocht!" Margin="-80,5,0,0" Visibility="{Binding IsChecked}" />
+                            </StackPanel>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <StackPanel Orientation="Horizontal"  Margin="0,15,0,0">
+                <Button Content="Buy this wish" Command="{Binding BuyWishCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
                 <Button Content="Accessors" Command="{Binding OpenAccessorsCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
             </StackPanel>
         </StackPanel>

@@ -12,10 +12,24 @@ namespace WishMeAList.ViewModels
     public class WishListAccessingViewModel : ViewModelBase
     {
         private NavigatorViewModel _parent { get; set; }
+        private Collection<Wish> _wishes;
+
+        private Wish _wish;
+        public Wish Wish {
+            get { return _wish; }
+            set { _wish = value; RaisePropertyChanged("Wish"); }
+        }
+
         public WishList WishList { get; set; }
         public RelayCommand OpenAccessorsCommand { get; set; }
+        public RelayCommand BuyWishCommand {get;set;}
 
-        private Collection<Wish> _wishes;
+        private Boolean _isChecked;
+        public Boolean IsChecked {
+            get { return _isChecked; }
+            set { _isChecked = value; RaisePropertyChanged("IsChecked"); }
+        }
+
         public ObservableCollection<Wish> Wishes
         {
             get { return new ObservableCollection<Wish>(_wishes); }
@@ -29,6 +43,24 @@ namespace WishMeAList.ViewModels
             this._wishes = new ObservableCollection<Wish>(wishList.Wishes);
 
             OpenAccessorsCommand = new RelayCommand(_ => OpenAccessors());
+            BuyWishCommand = new RelayCommand(_ => BuyWish());
+        }
+
+        private void BuyWish()
+        {
+            if (Wish.IsChecked)
+            {
+                Wish.IsChecked = false;
+                UserManager.CurrentUser.WishesBuying.Remove(Wish);
+
+            }
+            else
+            {
+                Wish.IsChecked = true;
+                UserManager.CurrentUser.WishesBuying.Add(Wish);
+            }
+            RaisePropertyChanged("IsChecked");
+            RaisePropertyChanged("Wishes");
         }
 
         private void OpenAccessors()
