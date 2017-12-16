@@ -180,6 +180,19 @@ namespace WishMeAListAPItutorial.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("WishMeAListAPItutorial.Models.Friendship", b =>
+                {
+                    b.Property<int>("BefrienderID");
+
+                    b.Property<int>("BefriendedID");
+
+                    b.HasKey("BefrienderID", "BefriendedID");
+
+                    b.HasIndex("BefriendedID");
+
+                    b.ToTable("Friendship");
+                });
+
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Notification", b =>
                 {
                     b.Property<int>("NotificationID")
@@ -343,6 +356,19 @@ namespace WishMeAListAPItutorial.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("WishMeAListAPItutorial.Models.Friendship", b =>
+                {
+                    b.HasOne("WishMeAListAPItutorial.Models.User", "Befriended")
+                        .WithMany()
+                        .HasForeignKey("BefriendedID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WishMeAListAPItutorial.Models.User", "Befriender")
+                        .WithMany()
+                        .HasForeignKey("BefrienderID")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Notification", b =>
                 {
                     b.HasOne("WishMeAListAPItutorial.Models.User", "Reciever")
@@ -357,7 +383,8 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.HasOne("WishMeAListAPItutorial.Models.User")
                         .WithMany("Notifications")
-                        .HasForeignKey("UserID");
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WishMeAListAPItutorial.Models.WishList", "WishList")
                         .WithMany()

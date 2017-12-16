@@ -64,7 +64,7 @@ namespace WishMeAListAPItutorial.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotification", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -86,7 +86,7 @@ namespace WishMeAListAPItutorial.Migrations
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedUserName")
+                    b.Property<string>("NormalizedNotificationName")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
@@ -99,7 +99,7 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("UserName")
+                    b.Property<string>("NotificationName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -107,15 +107,15 @@ namespace WishMeAListAPItutorial.Migrations
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
+                    b.HasIndex("NormalizedNotificationName")
                         .IsUnique()
-                        .HasName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+                        .HasName("NotificationNameIndex")
+                        .HasFilter("[NormalizedNotificationName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers");
+                    b.ToTable("AspNetNotifications");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -124,17 +124,17 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("NotificationId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("NotificationId");
 
-                    b.ToTable("AspNetUserClaims");
+                    b.ToTable("AspNetNotificationClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -142,32 +142,32 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("UserId")
+                    b.Property<string>("NotificationId")
                         .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("NotificationId");
 
-                    b.ToTable("AspNetUserLogins");
+                    b.ToTable("AspNetNotificationLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationRole<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("NotificationId");
 
                     b.Property<string>("RoleId");
 
-                    b.HasKey("UserId", "RoleId");
+                    b.HasKey("NotificationId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles");
+                    b.ToTable("AspNetNotificationRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationToken<string>", b =>
                 {
-                    b.Property<string>("UserId");
+                    b.Property<string>("NotificationId");
 
                     b.Property<string>("LoginProvider");
 
@@ -175,9 +175,9 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<string>("Value");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+                    b.HasKey("NotificationId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens");
+                    b.ToTable("AspNetNotificationTokens");
                 });
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Wish", b =>
@@ -231,40 +231,40 @@ namespace WishMeAListAPItutorial.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("NotificationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

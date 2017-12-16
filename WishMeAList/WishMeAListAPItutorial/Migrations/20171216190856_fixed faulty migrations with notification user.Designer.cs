@@ -12,8 +12,8 @@ using WishMeAListAPItutorial.Models;
 namespace WishMeAListAPItutorial.Migrations
 {
     [DbContext(typeof(WishListContext))]
-    [Migration("20171216010739_FK_BuyerID issues")]
-    partial class FK_BuyerIDissues
+    [Migration("20171216190856_fixed faulty migrations with notification user")]
+    partial class fixedfaultymigrationswithnotificationuser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -65,7 +65,7 @@ namespace WishMeAListAPItutorial.Migrations
                     b.ToTable("AspNetRoleClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotification", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd();
@@ -87,7 +87,7 @@ namespace WishMeAListAPItutorial.Migrations
                     b.Property<string>("NormalizedEmail")
                         .HasMaxLength(256);
 
-                    b.Property<string>("NormalizedNotificationName")
+                    b.Property<string>("NormalizedUserName")
                         .HasMaxLength(256);
 
                     b.Property<string>("PasswordHash");
@@ -100,7 +100,7 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<bool>("TwoFactorEnabled");
 
-                    b.Property<string>("NotificationName")
+                    b.Property<string>("UserName")
                         .HasMaxLength(256);
 
                     b.HasKey("Id");
@@ -108,15 +108,15 @@ namespace WishMeAListAPItutorial.Migrations
                     b.HasIndex("NormalizedEmail")
                         .HasName("EmailIndex");
 
-                    b.HasIndex("NormalizedNotificationName")
+                    b.HasIndex("NormalizedUserName")
                         .IsUnique()
-                        .HasName("NotificationNameIndex")
-                        .HasFilter("[NormalizedNotificationName] IS NOT NULL");
+                        .HasName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetNotifications");
+                    b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
@@ -125,17 +125,17 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<string>("ClaimValue");
 
-                    b.Property<string>("NotificationId")
+                    b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NotificationId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("AspNetNotificationClaims");
+                    b.ToTable("AspNetUserClaims");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider");
 
@@ -143,32 +143,32 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<string>("ProviderDisplayName");
 
-                    b.Property<string>("NotificationId")
+                    b.Property<string>("UserId")
                         .IsRequired();
 
                     b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("NotificationId");
+                    b.HasIndex("UserId");
 
-                    b.ToTable("AspNetNotificationLogins");
+                    b.ToTable("AspNetUserLogins");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.Property<string>("NotificationId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("RoleId");
 
-                    b.HasKey("NotificationId", "RoleId");
+                    b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetNotificationRoles");
+                    b.ToTable("AspNetUserRoles");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.Property<string>("NotificationId");
+                    b.Property<string>("UserId");
 
                     b.Property<string>("LoginProvider");
 
@@ -176,9 +176,9 @@ namespace WishMeAListAPItutorial.Migrations
 
                     b.Property<string>("Value");
 
-                    b.HasKey("NotificationId", "LoginProvider", "Name");
+                    b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetNotificationTokens");
+                    b.ToTable("AspNetUserTokens");
                 });
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Notification", b =>
@@ -186,9 +186,53 @@ namespace WishMeAListAPItutorial.Migrations
                     b.Property<int>("NotificationID")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<DateTime>("Date");
+
+                    b.Property<bool>("HasBeenRead");
+
+                    b.Property<string>("Message")
+                        .IsRequired();
+
+                    b.Property<int?>("RecieverUserID")
+                        .IsRequired();
+
+                    b.Property<int?>("SenderUserID")
+                        .IsRequired();
+
+                    b.Property<int>("Type");
+
+                    b.Property<int?>("UserID");
+
+                    b.Property<int?>("WishListID")
+                        .IsRequired();
+
                     b.HasKey("NotificationID");
 
+                    b.HasIndex("RecieverUserID");
+
+                    b.HasIndex("SenderUserID");
+
+                    b.HasIndex("UserID");
+
+                    b.HasIndex("WishListID");
+
                     b.ToTable("Notification");
+                });
+
+            modelBuilder.Entity("WishMeAListAPItutorial.Models.User", b =>
+                {
+                    b.Property<int>("UserID")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("FirstName")
+                        .IsRequired();
+
+                    b.Property<string>("LastName")
+                        .IsRequired();
+
+                    b.HasKey("UserID");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Wish", b =>
@@ -246,11 +290,11 @@ namespace WishMeAListAPItutorial.Migrations
                 {
                     b.Property<int>("WishListID");
 
-                    b.Property<int>("NotificationID");
+                    b.Property<int>("UserID");
 
-                    b.HasKey("WishListID", "NotificationID");
+                    b.HasKey("WishListID", "UserID");
 
-                    b.HasIndex("NotificationID");
+                    b.HasIndex("UserID");
 
                     b.ToTable("TTWishListAccessor");
                 });
@@ -263,46 +307,69 @@ namespace WishMeAListAPItutorial.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationClaim<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("NotificationId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationLogin<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("NotificationId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationRole<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole")
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("NotificationId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityNotificationToken<string>", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityNotification")
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser")
                         .WithMany()
-                        .HasForeignKey("NotificationId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("WishMeAListAPItutorial.Models.Notification", b =>
+                {
+                    b.HasOne("WishMeAListAPItutorial.Models.User", "Reciever")
+                        .WithMany()
+                        .HasForeignKey("RecieverUserID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WishMeAListAPItutorial.Models.User", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderUserID")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("WishMeAListAPItutorial.Models.User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WishMeAListAPItutorial.Models.WishList", "WishList")
+                        .WithMany()
+                        .HasForeignKey("WishListID")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Wish", b =>
                 {
-                    b.HasOne("WishMeAListAPItutorial.Models.Notification")
+                    b.HasOne("WishMeAListAPItutorial.Models.User")
                         .WithMany("WishesBuying")
                         .HasForeignKey("BuyerID")
                         .OnDelete(DeleteBehavior.Restrict);
@@ -315,7 +382,7 @@ namespace WishMeAListAPItutorial.Migrations
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.WishList", b =>
                 {
-                    b.HasOne("WishMeAListAPItutorial.Models.Notification")
+                    b.HasOne("WishMeAListAPItutorial.Models.User")
                         .WithMany("WishListsOwning")
                         .HasForeignKey("OwnerID")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -323,9 +390,9 @@ namespace WishMeAListAPItutorial.Migrations
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.WishListAccessor", b =>
                 {
-                    b.HasOne("WishMeAListAPItutorial.Models.Notification", "Notification")
+                    b.HasOne("WishMeAListAPItutorial.Models.User", "User")
                         .WithMany("WishListsAccessing")
-                        .HasForeignKey("NotificationID")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WishMeAListAPItutorial.Models.WishList", "WishList")

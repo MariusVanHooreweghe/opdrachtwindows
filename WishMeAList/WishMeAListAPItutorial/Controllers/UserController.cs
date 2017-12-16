@@ -19,12 +19,6 @@ namespace WishMeAListAPI.Controllers
         public UserController(WishListContext context)
         {
             _context = context;
-
-            //if (_context.Users.Count() == 0)
-            //{
-                //_context.Users.Add(new User());
-                //_context.SaveChanges();
-            //}
         }
         [HttpGet]
         public IEnumerable<User> GetAll()
@@ -40,6 +34,13 @@ namespace WishMeAListAPI.Controllers
                 return NotFound();
             }
             return new ObjectResult(item);
+        }
+        [HttpGet("friendships/{id}", Name = "GetFriends")]
+        public IEnumerable<User> GetFriendsById(long id)
+        {
+            IEnumerable<User> befriendedFriends = _context.Friendships.Where(f => f.BefrienderID == id).Select(f => f.Befriended).ToList();
+            IEnumerable<User> befrienderFriends = _context.Friendships.Where(f => f.BefriendedID == id).Select(f => f.Befriender).ToList();
+            return Enumerable.Union(befriendedFriends, befrienderFriends);
         }
         [HttpPost]
         public IActionResult Create([FromBody] User item)
@@ -73,7 +74,8 @@ namespace WishMeAListAPI.Controllers
             {
                 return NotFound();
             }
-
+            user.FirstName = item.FirstName;
+            user.LastName = item.LastName;
             user.WishListsOwning = item.WishListsOwning;
             user.WishListsAccessing = item.WishListsAccessing;
             user.WishesBuying = item.WishesBuying;

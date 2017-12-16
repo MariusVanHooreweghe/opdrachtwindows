@@ -101,15 +101,19 @@ namespace WishMeAList.ViewModels
 
         private void SubductAccess()
         {
-            List<Wish> wishesBuying = _parent.WishList.Wishes.Where(wish => wish.Buyer == SelectedAccessor).ToList();
-            SelectedAccessor.WishListsAccessing.Remove(_parent.WishList);
-            _parent.WishList.Accessors.Remove(SelectedAccessor);
-            foreach (Wish wish in wishesBuying)
-            {
-                SelectedAccessor.WishesBuying.Remove(wish);
-                wish.IsChecked = false;
-            }
+            //List<Wish> wishesBuying = _parent.WishList.Wishes.Where(wish => wish.Buyer == SelectedAccessor).ToList();
+            //SelectedAccessor.WishListsAccessing.Remove(_parent.WishList);
+            //_parent.WishList.Accessors.Remove(SelectedAccessor);
+            //foreach (Wish wish in wishesBuying)
+            //{
+            //    SelectedAccessor.WishesBuying.Remove(wish);
+            //    wish.IsChecked = false;
+            //}
+            //SelectedAccessor.Notifications.Add(new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, _parent.WishList));
+            HttpClient client = new HttpClient();
+            var res = client.DeleteAsync("http://localhost:65172/api/wishlists/" + _parent.WishList.WishListID + "/accessors/" + SelectedAccessor.UserID);
             SelectedAccessor.Notifications.Add(new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, _parent.WishList));
+            //TODO notification
             RaisePropertyChanged("FriendsVisibility");
             RaisePropertyChanged("Accessors");
             RaisePropertyChanged("OtherFriends");

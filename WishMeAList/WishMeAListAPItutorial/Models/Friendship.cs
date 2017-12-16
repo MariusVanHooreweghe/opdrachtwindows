@@ -10,7 +10,7 @@ namespace WishMeAListAPItutorial.Models
     {
         [ForeignKey("User")]
         public int BefrienderID { get; set; }
-        public WishList Befriender { get; set; }
+        public User Befriender { get; set; }
         [ForeignKey("User")]
         public int BefriendedID { get; set; }
         public User Befriended { get; set; }

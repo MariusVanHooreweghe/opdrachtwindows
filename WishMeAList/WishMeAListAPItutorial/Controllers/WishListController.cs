@@ -40,7 +40,7 @@ namespace WishMeAListAPI.Controllers
         [HttpGet("accessors/{id}", Name = "GetAccessorsByWishListID")]
         public IEnumerable<User> GetAccessorsByID(long id)
         {
-            return _context.WishListAccessors.Include(wla => wla.User).Include(wla => wla.WishList).Where(wla => wla.WishListID == id).Select(wla => wla.User).Include(u => u.WishesBuying).Include(u => u.WishListsAccessing).Include(u => u.WishListsOwning);
+            return _context.WishListAccessors.Include(wla => wla.User).ThenInclude(u => u.Notifications).Include(wla => wla.WishList).Where(wla => wla.WishListID == id).Select(wla => wla.User).Include(u => u.WishesBuying).Include(u => u.WishListsAccessing).Include(u => u.WishListsOwning);
         }
         [HttpGet("{id}", Name = "GetWishList")]
         public IActionResult GetById(long id)
@@ -95,6 +95,18 @@ namespace WishMeAListAPI.Controllers
             }
 
             _context.WishLists.Remove(wishList);
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
+        [HttpDelete("{wishlistid}/accessors/{userid}")]
+        public IActionResult DeleteAccess(long wishlistid, long userid)
+        {
+            var wishListAccessor = _context.WishListAccessors.FirstOrDefault(t => t.WishListID == wishlistid && t.UserID == userid);
+            if (wishListAccessor == null)
+            {
+                return NotFound();
+            }
+            _context.WishListAccessors.Remove(wishListAccessor);
             _context.SaveChanges();
             return new NoContentResult();
         }

@@ -16,7 +16,8 @@ namespace WishMeAListAPItutorial.Data
         public DbSet<Wish> Wishes { get; set; }
         public DbSet<WishListAccessor> WishListAccessors { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Friendship> Friendships { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -25,6 +26,7 @@ namespace WishMeAListAPItutorial.Data
             modelBuilder.ApplyConfiguration(new WishListAccessorConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new NotificationConfiguration());
+            modelBuilder.ApplyConfiguration(new FriendshipConfiguration());
         }
     }
 }
