@@ -25,8 +25,8 @@
             </ListView>
             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                 <Button Content="Add WishList" Command="{Binding AddWishListCommand}" Margin="15,0,0,0"/>
-                <Button Content="Delete WishList" Command="{Binding DeleteWishListCommand}" Margin="15,0,0,0"/>
-                <Button Content="View wishes" Command="{Binding ViewWishesCommand}" Margin="15,0,0,0"/>
+                <Button Content="Delete WishList" Command="{Binding DeleteWishListCommand}" Visibility="{Binding ViewWishesVisibility}" Margin="15,0,0,0"/>
+                <Button Content="View wishes" Command="{Binding ViewWishesCommand}" Visibility="{Binding ViewWishesVisibility}" Margin="15,0,0,0"/>
             </StackPanel>
         </StackPanel>
     </ScrollViewer>

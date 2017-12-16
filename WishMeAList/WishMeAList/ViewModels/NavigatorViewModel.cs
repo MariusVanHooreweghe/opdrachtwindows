@@ -21,6 +21,7 @@ namespace WishMeAList.ViewModels
         public RelayCommand ShowWishlistsAccessingCommand { get; set; }
         public RelayCommand ShowWishesBuyingCommand { get; set; }
         public RelayCommand ShowFriendsCommand { get; set; }
+        public RelayCommand ShowNotificationsCommand { get; set; }
 
         public NavigatorViewModel()
         {
@@ -31,6 +32,7 @@ namespace WishMeAList.ViewModels
             ShowWishlistsAccessingCommand = new RelayCommand(_ => ShowWishlistsAccessing());
             ShowWishesBuyingCommand = new RelayCommand(_ => ShowWishesBuying());
             ShowFriendsCommand = new RelayCommand(_ => ShowFriends());
+            ShowNotificationsCommand = new RelayCommand(_ => ShowNotifications());
             ShowWishlistsOwning();
         }
 
@@ -54,6 +56,11 @@ namespace WishMeAList.ViewModels
             CurrentData = new FriendsViewModel(this);
         }
 
+        private void ShowNotifications()
+        {
+            CurrentData = new NotificationsViewModel();
+        }
+
         // Dummy data
         public Collection<WishList> WishListsOwning { get; set; }
         public Collection<WishList> WishListsAccessing { get; set; }
@@ -67,7 +74,8 @@ namespace WishMeAList.ViewModels
                 LastName = "Standaert",
                 WishListsAccessing = new Collection<WishList>(),
                 WishListsOwning = new Collection<WishList>(),
-                WishesBuying = new Collection<Wish>()
+                WishesBuying = new Collection<Wish>(),
+                Notifications = new Collection<Notification>()
             };
             User OtherUser = new User {
                 UserID = 1,
@@ -75,7 +83,8 @@ namespace WishMeAList.ViewModels
                 LastName = "Gobert",
                 WishListsAccessing = new Collection<WishList>(),
                 WishListsOwning = new Collection<WishList>(),
-                WishesBuying = new Collection<Wish>()
+                WishesBuying = new Collection<Wish>(),
+                Notifications = new Collection<Notification>()
             };
 
             Collection<User> ThisUserInACollection = new Collection<User>();
@@ -168,7 +177,8 @@ namespace WishMeAList.ViewModels
 
             OtherUser.WishListsOwning = WishListsAccessing;
 
-
+            Notification accessRequest = new Notification(OtherUser, ThisUser, NotificationType.REQUEST_FOR_ACCESS, wishList2);
+            ThisUser.Notifications.Add(accessRequest);
 
         }
         // ---------------------

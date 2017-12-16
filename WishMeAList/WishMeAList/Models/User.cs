@@ -17,5 +17,6 @@ namespace WishMeAList.Models
         public virtual Collection<WishList> WishListsOwning { get; set; }
         public virtual Collection<WishList> WishListsAccessing { get; set; }
         public virtual Collection<Wish> WishesBuying { get; set; }
+        public virtual Collection<Notification> Notifications { get; set; }
     }
 }

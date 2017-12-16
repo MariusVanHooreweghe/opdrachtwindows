@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using WishMeAList.Models;
 using WishMeAList.Utils;
 
@@ -33,6 +34,8 @@ namespace WishMeAList.ViewModels
         public RelayCommand ToggleCheckedWishCommand { get; set; }
 
         private NavigatorViewModel _parent { get; set; }
+        public String ViewWishesVisibility { get { return Wishes.Count == 0 ? "Collapsed" : "Visible"; } }
+
 
 
         public WishListViewModel(WishList wishList, NavigatorViewModel parent)
@@ -54,12 +57,29 @@ namespace WishMeAList.ViewModels
 
         private async Task DeleteWish()
         {
+            if(WishToDelete == null)
+            {
+                DisplayDialog();
+                return;
+            }
             _wishes.Remove(WishToDelete);
             //UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
             //string wishJson = JsonConvert.SerializeObject(WishToDelete);
             HttpClient client = new HttpClient();
             var res = await client.DeleteAsync("http://localhost:65172/api/wishes/"+WishToDelete.WishID); 
             RaisePropertyChanged("Wishes");
+            RaisePropertyChanged("ViewWishesVisibility");
+        }
+
+        private async void DisplayDialog()
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "No Wish selected",
+                Content = "Please select a Wish and try again.",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
         private void ToggleCheckedWish(object wishID)

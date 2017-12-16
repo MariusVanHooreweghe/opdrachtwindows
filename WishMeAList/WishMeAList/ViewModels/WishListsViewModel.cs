@@ -31,6 +31,8 @@ namespace WishMeAList.ViewModels
         public RelayCommand AddWishListCommand { get; set; }
         public RelayCommand DeleteWishListCommand { get; set; }
         public RelayCommand ViewWishesCommand { get; set; }
+        public String ViewWishesVisibility { get { return WishLists.Count == 0 ? "Collapsed" : "Visible"; } }
+
 
         private NavigatorViewModel _parent { get; set; }
 
@@ -65,17 +67,38 @@ namespace WishMeAList.ViewModels
         }
         private void DeleteWishList()
         {
-            // WishLists.Remove(WishLists.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault());
+            if( WishList == null)
+            {
+                DisplayDialog();
+                return;
+            }
             _wishLists.Remove(WishList);
             UserManager.CurrentUser.WishListsOwning = _wishLists;
-            RaisePropertyChanged("WishLists");
+            RaisePropertyChanged("WishLists"); 
+            RaisePropertyChanged("ViewWishesVisibility");
         }
   
 
         public void ViewWishes()
         {
+            if(WishList == null)
+            {
+                DisplayDialog();
+                return;
+            }
             this._parent.CurrentData = new WishListViewModel(WishLists.Where(val => 
                     val.WishListID == WishList.WishListID).SingleOrDefault(), this._parent);
+        }
+
+        private async void DisplayDialog()
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "No Wishlist selected",
+                Content = "Please select a Wishlist and try again.",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
     }
