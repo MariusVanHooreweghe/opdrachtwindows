@@ -12,9 +12,10 @@ using WishMeAListAPItutorial.Models;
 namespace WishMeAListAPItutorial.Migrations
 {
     [DbContext(typeof(WishListContext))]
-    partial class WishListContextModelSnapshot : ModelSnapshot
+    [Migration("20171216155754_FirstName_and_LastName_Required")]
+    partial class FirstName_and_LastName_Required
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

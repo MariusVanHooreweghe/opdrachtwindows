@@ -12,9 +12,10 @@ using WishMeAListAPItutorial.Models;
 namespace WishMeAListAPItutorial.Migrations
 {
     [DbContext(typeof(WishListContext))]
-    partial class WishListContextModelSnapshot : ModelSnapshot
+    [Migration("20171216155205_Notification_and_FirstName_LastName")]
+    partial class Notification_and_FirstName_LastName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -223,11 +224,9 @@ namespace WishMeAListAPItutorial.Migrations
                     b.Property<int>("UserID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("FirstName")
-                        .IsRequired();
+                    b.Property<string>("FirstName");
 
-                    b.Property<string>("LastName")
-                        .IsRequired();
+                    b.Property<string>("LastName");
 
                     b.HasKey("UserID");
 

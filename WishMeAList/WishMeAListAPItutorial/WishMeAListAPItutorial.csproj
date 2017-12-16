@@ -19,6 +19,8 @@
     <Compile Remove="Migrations\20171212230941_UserAndWishListAccessor.Designer.cs" />
     <Compile Remove="Migrations\20171212231727_UserAndWishListAccessor.cs" />
     <Compile Remove="Migrations\20171212231727_UserAndWishListAccessor.Designer.cs" />
+    <Compile Remove="Migrations\20171216154822_Notification_and_FirstName_LastName.cs" />
+    <Compile Remove="Migrations\20171216154822_Notification_and_FirstName_LastName.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
