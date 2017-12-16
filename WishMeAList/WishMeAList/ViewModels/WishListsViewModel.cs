@@ -49,7 +49,11 @@ namespace WishMeAList.ViewModels
         }
         private void DeleteWishList()
         {
-            // WishLists.Remove(WishLists.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault());
+            if( WishList == null)
+            {
+                DisplayDialog();
+                return;
+            }
             _wishLists.Remove(WishList);
             UserManager.CurrentUser.WishListsOwning = _wishLists;
             RaisePropertyChanged("WishLists"); 
@@ -59,8 +63,24 @@ namespace WishMeAList.ViewModels
 
         public void ViewWishes()
         {
+            if(WishList == null)
+            {
+                DisplayDialog();
+                return;
+            }
             this._parent.CurrentData = new WishListViewModel(WishLists.Where(val => 
                     val.WishListID == WishList.WishListID).SingleOrDefault(), this._parent);
+        }
+
+        private async void DisplayDialog()
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "No Wishlist selected",
+                Content = "Please select a Wishlist and try again.",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
     }
