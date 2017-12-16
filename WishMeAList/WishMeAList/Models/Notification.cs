@@ -11,11 +11,12 @@ namespace WishMeAList.Models
 {
     public class Notification : INotifyPropertyChanged
     {
+        public int NoitifcationID { get; set; }
         public User Sender { get; set; }
         public User Reciever { get; set; }
-        public NotificationType Type { get; }
+        public NotificationType Type { get; set; }
         public WishList WishList { get; set; }
-        public String Message { get; }
+        public String Message { get; set; }
         public bool HasBeenRead { get; set; }
         public DateTime Date { get; set; }
 

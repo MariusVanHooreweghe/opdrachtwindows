@@ -44,6 +44,7 @@ namespace WishMeAList.ViewModels
             this._parent = parent;
             this._wishes = new ObservableCollection<Wish>(wishList.Wishes);
 
+            ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
             AddWishCommand = new RelayCommand(_ => AddWish());
             DeleteWishCommand = new RelayCommand(_ => DeleteWish());
             OpenAccessorsCommand = new RelayCommand(_ => OpenAccessors());
@@ -79,6 +80,23 @@ namespace WishMeAList.ViewModels
                 CloseButtonText = "Ok"
             };
             ContentDialogResult result = await dialog.ShowAsync();
+        }
+
+        private void ToggleCheckedWish(object wishID)
+        {
+            Wish wish = Wishes.FirstOrDefault(w => w.WishID == int.Parse(wishID.ToString()));
+            bool isChecking = !wish.IsChecked;
+            wish.IsChecked = isChecking;
+            if (isChecking)
+            {
+                // wish.Buyer = currentUser
+                // currentUser.WishedBuying.Add(wish);
+            }
+            else
+            {
+                // wish.Buyer = null;
+                // currentUser.WishedBuying.Remove(w => w.wishID = wish.wishID);
+            }
         }
 
         private void OpenAccessors()

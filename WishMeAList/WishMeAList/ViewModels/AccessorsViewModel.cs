@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -24,7 +27,13 @@ namespace WishMeAList.ViewModels
 
         public ObservableCollection<User> Accessors
         {
-            get { return new ObservableCollection<User>(_parent.WishList.Accessors.OrderBy(val => val.FirstName).ThenBy(val => val.LastName)); }
+            get {
+                if (_parent.WishList.Accessors == null)
+                {
+                    return new ObservableCollection<User>();
+                }
+                return new ObservableCollection<User>(_parent.WishList.Accessors?.OrderBy(val => val.FirstName).ThenBy(val => val.LastName)); 
+            }
         }
 
         public ObservableCollection<User> OtherFriends
@@ -38,12 +47,31 @@ namespace WishMeAList.ViewModels
         public AccessorsViewModel(WishListViewModel parent)
         {
             _parent = parent;
+            initAccessors();
              Title =  _parent.WishList.Title + " - Accessors";
              _selectedFriends = new Collection<User>();
-
             AddAccessorsCommand = new RelayCommand(_ => AddAccessors());
             SubductAccessCommand = new RelayCommand(_ => SubductAccess());
 
+        }
+
+        private async Task initAccessors()
+        {
+            var accessorsJson = "{}";
+            try
+            {
+                HttpClient client = new HttpClient();
+                accessorsJson = await client.GetStringAsync(new Uri("http://localhost:65172/api/wishlists/accessors/" + _parent.WishList.WishListID));
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+            _parent.WishList.Accessors = JsonConvert.DeserializeObject<ObservableCollection<User>>(accessorsJson);
+            RaisePropertyChanged("FriendsVisibility");
+            RaisePropertyChanged("Accessors");
+            RaisePropertyChanged("OtherFriends");
+            RaisePropertyChanged("InviteMoreFriendsVisibility");
         }
 
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)

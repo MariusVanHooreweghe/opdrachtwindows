@@ -24,6 +24,7 @@ namespace WishMeAListAPItutorial.Data
             modelBuilder.ApplyConfiguration(new WishConfiguration());
             modelBuilder.ApplyConfiguration(new WishListAccessorConfiguration());
             modelBuilder.ApplyConfiguration(new UserConfiguration());
+            modelBuilder.ApplyConfiguration(new NotificationConfiguration());
         }
     }
 }
