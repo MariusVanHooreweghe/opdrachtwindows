@@ -35,12 +35,34 @@ namespace WishMeAList.ViewModels
             get { return new ObservableCollection<Wish>(_wishes); }
             set { _wishes = value; RaisePropertyChanged("Wishes"); }
         }
+        public List<WishCategorie> EnumVal { get; set; }
+
+        private WishCategorie _filterCategory;
+        public WishCategorie FilterCategory {
+            get { return _filterCategory; }
+            set {
+                _filterCategory = value;
+                if (_filterCategory != WishCategorie.DEFAULT)
+                {
+                    _wishes = new Collection<Wish>(_wishes.Where(val => val.Categorie == _filterCategory).ToList());
+                }
+                else
+                {
+                    _wishes = WishList.Wishes;
+                }
+                RaisePropertyChanged("FilterCategory");
+                RaisePropertyChanged("Wishes");
+            }
+
+        }
 
         public WishListAccessingViewModel(WishList wishList, NavigatorViewModel parent)
         {
             this.WishList = wishList;
             this._parent = parent;
             this._wishes = new ObservableCollection<Wish>(wishList.Wishes);
+            EnumVal = Enum.GetValues(typeof(WishCategorie)).Cast<WishCategorie>().ToList();
+
 
             OpenAccessorsCommand = new RelayCommand(_ => OpenAccessors());
             BuyWishCommand = new RelayCommand(_ => BuyWish());

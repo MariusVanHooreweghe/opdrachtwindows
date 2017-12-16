@@ -10,6 +10,10 @@
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
             <TextBlock Text="{Binding WishList.Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Choose a Category: " Margin="5,20,10,0"/>
+                <ComboBox x:Name="Categorie" ItemsSource="{Binding EnumVal}" SelectedItem="{Binding Path=FilterCategory, Mode=TwoWay}"  PlaceholderText="Select category" Margin="0,20,0,20"></ComboBox>
+            </StackPanel>
             <ListView ItemsSource="{Binding Wishes}" SelectedItem="{Binding WishToDelete, Mode=TwoWay}">
                 <ListView.ItemTemplate >
                     <DataTemplate >

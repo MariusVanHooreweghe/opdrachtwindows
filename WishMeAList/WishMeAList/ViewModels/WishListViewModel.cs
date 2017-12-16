@@ -27,6 +27,25 @@ namespace WishMeAList.ViewModels
             get { return _wishToDelete; }
             set { _wishToDelete = value; RaisePropertyChanged("WishToDelete"); }
         }
+        public List<WishCategorie> EnumVal { get; set; }
+
+        private WishCategorie _filterCategory;
+        public WishCategorie FilterCategory {
+            get { return _filterCategory; }
+            set { _filterCategory = value;
+                if(_filterCategory != WishCategorie.DEFAULT)
+                {
+                    _wishes = new Collection<Wish>(_wishes.Where(val => val.Categorie == _filterCategory).ToList());
+                }
+                else
+                {
+                    _wishes = WishList.Wishes;
+                }
+                RaisePropertyChanged("FilterCategory");
+                RaisePropertyChanged("Wishes");
+            }
+
+        }
 
         public RelayCommand AddWishCommand { get; set; }
         public RelayCommand DeleteWishCommand { get; set; }
@@ -43,6 +62,8 @@ namespace WishMeAList.ViewModels
             this.WishList = wishList;
             this._parent = parent;
             this._wishes = new ObservableCollection<Wish>(wishList.Wishes);
+            EnumVal = Enum.GetValues(typeof(WishCategorie)).Cast<WishCategorie>().ToList();
+
 
             ToggleCheckedWishCommand = new RelayCommand((param) => ToggleCheckedWish(param));
             AddWishCommand = new RelayCommand(_ => AddWish());
