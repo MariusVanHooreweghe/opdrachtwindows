@@ -13,10 +13,18 @@ namespace WishMeAList.ViewModels
     {
         public ObservableCollection<User> Friends { get { return new ObservableCollection<User>(UserManager.CurrentUser.Friends); } }
         private NavigatorViewModel _parent { get; set; }
+        public User SelectedFriend { get; set; }
+        public RelayCommand ShowFriendCommand { get; set; }
 
         public FriendsViewModel(NavigatorViewModel parent)
         {
             this._parent = parent;
+            ShowFriendCommand = new RelayCommand(_ => ShowFriend());
+        }
+
+        private void ShowFriend()
+        {
+            _parent.CurrentData = new FriendViewModel(SelectedFriend);
         }
     }
 }
