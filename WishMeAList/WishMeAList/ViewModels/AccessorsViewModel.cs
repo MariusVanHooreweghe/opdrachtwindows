@@ -13,9 +13,13 @@ namespace WishMeAList.ViewModels
     public class AccessorsViewModel : ViewModelBase
     {
         public String Title { get; set; }
+        public User SelectedAccessor { get; set; }
         private Collection<User> _selectedFriends { get; set; }
         public RelayCommand AddAccessorsCommand { get; set; }
+        public RelayCommand SubductAccessCommand { get; set; }
         private WishListViewModel _parent { get; set; }
+
+        public String FriendsVisibility { get { return Accessors.Count == 0 ? "Collapsed" : "Visible"; } }
         public String InviteMoreFriendsVisibility { get { return OtherFriends.Count == 0 ? "Collapsed" : "Visible"; } }
 
         public ObservableCollection<User> Accessors
@@ -38,6 +42,7 @@ namespace WishMeAList.ViewModels
              _selectedFriends = new Collection<User>();
 
             AddAccessorsCommand = new RelayCommand(_ => AddAccessors());
+            SubductAccessCommand = new RelayCommand(_ => SubductAccess());
 
         }
 
@@ -60,6 +65,25 @@ namespace WishMeAList.ViewModels
             {
                 friend.Notifications.Add(new Notification(UserManager.CurrentUser, friend, NotificationType.INVITE_FOR_ACCESS, _parent.WishList));
             }
+            RaisePropertyChanged("FriendsVisibility");
+            RaisePropertyChanged("Accessors");
+            RaisePropertyChanged("OtherFriends");
+            RaisePropertyChanged("InviteMoreFriendsVisibility");
+        }
+
+        private void SubductAccess()
+        {
+            List<Wish> wishesBuying = _parent.WishList.Wishes.Where(wish => wish.Buyer == SelectedAccessor).ToList();
+            SelectedAccessor.WishListsAccessing.Remove(_parent.WishList);
+            _parent.WishList.Accessors.Remove(SelectedAccessor);
+            foreach (Wish wish in wishesBuying)
+            {
+                SelectedAccessor.WishesBuying.Remove(wish);
+                wish.IsChecked = false;
+            }
+            SelectedAccessor.Notifications.Add(new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, _parent.WishList));
+            RaisePropertyChanged("FriendsVisibility");
+            RaisePropertyChanged("Accessors");
             RaisePropertyChanged("OtherFriends");
             RaisePropertyChanged("InviteMoreFriendsVisibility");
         }

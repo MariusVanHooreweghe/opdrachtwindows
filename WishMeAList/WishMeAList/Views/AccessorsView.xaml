@@ -7,16 +7,17 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <ScrollViewer HorizontalContentAlignment="Stretch">
+    <ScrollViewer HorizontalContentAlignment="Stretch" >
         <StackPanel>
             <TextBlock Text="{Binding Title}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding Accessors}">
+            <ListView ItemsSource="{Binding Accessors}" SelectedItem="{Binding SelectedAccessor, Mode=TwoWay}">
                 <ListView.ItemTemplate >
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}"/>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <Button Content="Subduct access" Command="{Binding SubductAccessCommand}" Visibility="{Binding FriendsVisibility}"/>
 
             <ScrollViewer HorizontalContentAlignment="Stretch" Visibility="{Binding InviteMoreFriendsVisibility}">
                 <StackPanel>
