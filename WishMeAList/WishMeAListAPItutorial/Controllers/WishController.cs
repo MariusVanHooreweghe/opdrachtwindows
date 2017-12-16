@@ -32,7 +32,7 @@ namespace WishMeAListAPI.Controllers
             return _context.Wishes.ToList();
         }
         [HttpGet("{id}", Name = "GetWish")]
-        public IActionResult GetById(long id)   
+        public IActionResult GetById(long id)
         {
             var item = _context.Wishes.FirstOrDefault(t => t.WishID == id);
             if (item == null)

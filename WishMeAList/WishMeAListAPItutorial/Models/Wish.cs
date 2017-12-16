@@ -20,7 +20,7 @@ namespace WishMeAListAPItutorial.Models
         public bool IsChecked { get; set; }
         public string ImageURL { get; set; }
         [ForeignKey("User")]
-        public int BuyerID { get; set; }
+        public int? BuyerID { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

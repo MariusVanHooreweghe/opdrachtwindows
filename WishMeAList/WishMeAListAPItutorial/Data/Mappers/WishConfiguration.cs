@@ -21,6 +21,7 @@ namespace WishMeAListAPItutorial.Data.Mappers
             builder.Property(t => t.ImageURL).IsRequired(false);
             builder.Property(t => t.IsChecked);
             builder.Property(t => t.Categorie).IsRequired();
+            builder.Property(t => t.BuyerID).IsRequired(false);
         }
     }
 }

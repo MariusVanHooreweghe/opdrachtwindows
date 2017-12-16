@@ -60,6 +60,7 @@ namespace WishMeAList.ViewModels
 
         public void initData()
         {
+            
             User ThisUser = new User {
                 UserID = 2,
                 FirstName = "Ruben",
@@ -152,7 +153,7 @@ namespace WishMeAList.ViewModels
                 OwnerID = 2,
                 Title = "Babyborrel"
             };
-
+            
             WishListsOwning = new Collection<WishList>();
             WishListsOwning.Add(wishList2);
             WishListsAccessing = new Collection<WishList>();

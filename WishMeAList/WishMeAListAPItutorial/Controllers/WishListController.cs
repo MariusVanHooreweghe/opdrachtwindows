@@ -22,9 +22,9 @@ namespace WishMeAListAPI.Controllers
 
             //if (_context.WishLists.Count() == 0)
             //{
-                //_context.WishLists.Add(new WishList { Title = "Item1", DateOfEvent = DateTime.Now, OwnerID = 1});
+            //_context.WishLists.Add(new WishList { Title = "Item1", DateOfEvent = DateTime.Now, OwnerID = 1});
             //    _context.WishLists.Add(new WishList { Title = "Item2" });
-                //_context.SaveChanges();
+            //_context.SaveChanges();
             //}
         }
         [HttpGet]
@@ -32,10 +32,15 @@ namespace WishMeAListAPI.Controllers
         {
             return _context.WishLists.Include(wl => wl.Wishes).Include(wl => wl.Accessors).ThenInclude(wla => wla.User).ToList();
         }
+        [HttpGet("user/{id}", Name ="GetWishListByUserID")]
+        public IEnumerable<WishList> GetByUserID(long id)
+        {
+            return _context.WishLists.Include(wl => wl.Wishes).Where(wl => wl.OwnerID == id);
+        }
         [HttpGet("{id}", Name = "GetWishList")]
         public IActionResult GetById(long id)
         {
-            var item = _context.WishLists.FirstOrDefault(t => t.WishListID == id);
+            var item = _context.WishLists.Include(wl => wl.Wishes).Include(wl => wl.Accessors).ThenInclude(wla => wla.User).FirstOrDefault(t => t.WishListID == id);
             if (item == null)
             {
                 return NotFound();
