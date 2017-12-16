@@ -32,14 +32,12 @@ namespace WishMeAList.ViewModels
         private WishCategorie _filterCategory;
         public WishCategorie FilterCategory {
             get { return _filterCategory; }
-            set { _filterCategory = value;
-                if(_filterCategory != WishCategorie.DEFAULT)
+            set {
+                _filterCategory = value;
+                Wishes = new ObservableCollection<Wish>(WishList.Wishes);
+                if (_filterCategory != WishCategorie.DEFAULT)
                 {
-                    _wishes = new Collection<Wish>(_wishes.Where(val => val.Categorie == _filterCategory).ToList());
-                }
-                else
-                {
-                    _wishes = WishList.Wishes;
+                    Wishes = new ObservableCollection<Wish>(Wishes.Where(val => val.Categorie == _filterCategory).ToList());
                 }
                 RaisePropertyChanged("FilterCategory");
                 RaisePropertyChanged("Wishes");
