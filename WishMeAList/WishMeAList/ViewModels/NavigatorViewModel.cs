@@ -25,7 +25,7 @@ namespace WishMeAList.ViewModels
 
         public NavigatorViewModel()
         {
-            // Dummy data
+            // Backend data
             initData();
             // ----------
             ShowWishlistsOwningCommand = new RelayCommand(_ => ShowWishlistsOwning());

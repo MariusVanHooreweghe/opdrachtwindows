@@ -54,9 +54,11 @@ namespace WishMeAList.ViewModels
                 HttpClient client = new HttpClient();
                 var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/WishLists/user/"+1/*+UserManager.CurrentUser.UserID*/));
                 WishLists = JsonConvert.DeserializeObject<ObservableCollection<WishList>>(json);
+                RaisePropertyChanged("ViewWishesVisibility");
             }
             catch (Exception e)
             {
+                Debug.Write(e.Message);
                 WishLists = new ObservableCollection<WishList>();
             }
         }
