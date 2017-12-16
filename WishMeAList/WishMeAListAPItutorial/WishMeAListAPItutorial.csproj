@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Migrations\20171212200336_WishList.cs" />
+    <Compile Remove="Migrations\20171212200336_WishList.Designer.cs" />
+    <Compile Remove="Migrations\20171212200739_WishList.cs" />
+    <Compile Remove="Migrations\20171212200739_WishList.Designer.cs" />
+    <Compile Remove="Migrations\20171212201942_WishList.cs" />
+    <Compile Remove="Migrations\20171212201942_WishList.Designer.cs" />
+    <Compile Remove="Migrations\20171212202108_WishList.cs" />
+    <Compile Remove="Migrations\20171212202108_WishList.Designer.cs" />
+    <Compile Remove="Migrations\20171212230056_UserAndWishListAccessor.cs" />
+    <Compile Remove="Migrations\20171212230056_UserAndWishListAccessor.Designer.cs" />
+    <Compile Remove="Migrations\20171212230941_UserAndWishListAccessor.cs" />
+    <Compile Remove="Migrations\20171212230941_UserAndWishListAccessor.Designer.cs" />
+    <Compile Remove="Migrations\20171212231727_UserAndWishListAccessor.cs" />
+    <Compile Remove="Migrations\20171212231727_UserAndWishListAccessor.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.1" />
+  </ItemGroup>
+
+</Project>

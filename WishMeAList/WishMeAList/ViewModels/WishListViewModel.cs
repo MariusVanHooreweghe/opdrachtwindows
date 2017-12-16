@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -52,7 +54,7 @@ namespace WishMeAList.ViewModels
             this._parent.CurrentData = new AddWishViewModel(WishList, _parent);
         }
 
-        private void DeleteWish()
+        private async Task DeleteWish()
         {
             if(WishToDelete == null)
             {
@@ -60,7 +62,10 @@ namespace WishMeAList.ViewModels
                 return;
             }
             _wishes.Remove(WishToDelete);
-            UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
+            //UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
+            //string wishJson = JsonConvert.SerializeObject(WishToDelete);
+            HttpClient client = new HttpClient();
+            var res = await client.DeleteAsync("http://localhost:65172/api/wishes/"+WishToDelete.WishID); 
             RaisePropertyChanged("Wishes");
             RaisePropertyChanged("ViewWishesVisibility");
         }

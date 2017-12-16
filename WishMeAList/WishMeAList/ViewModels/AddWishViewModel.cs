@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -53,15 +56,31 @@ namespace WishMeAList.ViewModels
             {
                 Title = this.Title,
                 Description = this.Description,
-                Categorie = this.Categorie
+                Categorie = this.Categorie,
+                WishListID = WishList.WishListID
             };
 
-            Wishes.Add(Wish);
+            PostWish(Wish);
+
+        }
+
+        private async void PostWish(Wish wish) {
+            string wishJson = JsonConvert.SerializeObject(wish);
+            Debug.Write(wishJson);
+            HttpClient client = new HttpClient();
+            var res = await client.PostAsync("http://localhost:65172/api/wishes/", new StringContent(wishJson, System.Text.Encoding.UTF8, "application/json"));
+            Debug.Write(res);
+            if (res.Content != null)
+            {
+                string newWishJson = await res.Content.ReadAsStringAsync();
+                Wishes.Add(JsonConvert.DeserializeObject<Wish>(newWishJson));
+            }
             //sorting the wishes by Category then by Title
             Wishes = new ObservableCollection<Wish>(Wishes.OrderBy(val => val.Categorie).ThenBy(val => val.Title));
             WishList.Wishes = Wishes;
 
-            _parent.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault().Wishes = Wishes;
+
+            //_parent.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault().Wishes = Wishes;
             _parent.CurrentData = new WishListViewModel(WishList, this._parent);
         }
 
