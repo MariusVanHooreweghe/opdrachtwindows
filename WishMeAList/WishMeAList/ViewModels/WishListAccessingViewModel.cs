@@ -51,15 +51,18 @@ namespace WishMeAList.ViewModels
             if (Wish.IsChecked)
             {
                 Wish.IsChecked = false;
+                Wish.Buyer = UserManager.CurrentUser;
                 UserManager.CurrentUser.WishesBuying.Remove(Wish);
 
             }
             else
             {
                 Wish.IsChecked = true;
+                Wish.Buyer = null;
                 UserManager.CurrentUser.WishesBuying.Add(Wish);
             }
             RaisePropertyChanged("IsChecked");
+            RaisePropertyChanged("Wish");
             RaisePropertyChanged("Wishes");
         }
 
