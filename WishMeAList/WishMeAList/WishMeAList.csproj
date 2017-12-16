@@ -95,6 +95,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\NotificationType.cs" />
     <Compile Include="Utils\UserManager.cs" />
     <Compile Include="ViewModels\AccessorsAccessingViewModel.cs" />
     <Compile Include="ViewModels\AccessorsViewModel.cs" />
@@ -104,6 +106,7 @@
     <Compile Include="ViewModels\LogInViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\NavigatorViewModel.cs" />
+    <Compile Include="ViewModels\NotificationsViewModel.cs" />
     <Compile Include="ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Wish.cs" />
@@ -140,6 +143,9 @@
     </Compile>
     <Compile Include="Views\NavigatorView.xaml.cs">
       <DependentUpon>NavigatorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NotificationsView.xaml.cs">
+      <DependentUpon>NotificationsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\RegisterView.xaml.cs">
       <DependentUpon>RegisterView.xaml</DependentUpon>
@@ -210,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NavigatorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NotificationsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

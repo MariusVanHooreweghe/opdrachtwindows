@@ -25,7 +25,9 @@ namespace WishMeAList.ViewModels
 
         public ObservableCollection<User> OtherFriends
         {
-            get { return new ObservableCollection<User>(UserManager.CurrentUser.Friends.Where(user => !Accessors.Contains(user))
+            get { return new ObservableCollection<User>(UserManager.CurrentUser.Friends
+                .Where(user => !Accessors.Contains(user)
+                    && user.Notifications.SingleOrDefault(not => not.WishList == _parent.WishList && not.Type == NotificationType.INVITE_FOR_ACCESS) == null)
                 .OrderBy(val => val.FirstName).ThenBy(val => val.LastName)); }
         }
 
@@ -56,19 +58,10 @@ namespace WishMeAList.ViewModels
         {
             foreach (User friend in _selectedFriends)
             {
-                if (!friend.WishListsAccessing.Contains(_parent.WishList))
-                {
-                    friend.WishListsAccessing.Add(_parent.WishList);
-                }
-                if (!_parent.WishList.Accessors.Contains(friend))
-                {
-                    _parent.WishList.Accessors.Add(friend);
-                    Accessors.Add(friend);
-                    RaisePropertyChanged("Accessors");
-                    RaisePropertyChanged("OtherFriends");
-                    RaisePropertyChanged("InviteMoreFriendsVisibility");
-                }
+                friend.Notifications.Add(new Notification(UserManager.CurrentUser, friend, NotificationType.INVITE_FOR_ACCESS, _parent.WishList));
             }
+            RaisePropertyChanged("OtherFriends");
+            RaisePropertyChanged("InviteMoreFriendsVisibility");
         }
     }
 }
