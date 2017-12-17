@@ -59,11 +59,6 @@ namespace WishMeAListAPI.Controllers
 
             return CreatedAtRoute("GetWish", new { id = item.WishID }, item);
         }
-        [HttpPost("accessor/{userid}/create/{wishlistid}"]
-        public IActionResult CreateAccess(long userid, long wishlistid, [FromBody] WishList wishList)
-        {
-            WishListAccessor wla = new WishListAccessor { WishList = wishList;  };
-        }
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] Wish item)
         {
