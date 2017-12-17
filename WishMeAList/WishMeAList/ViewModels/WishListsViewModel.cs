@@ -52,7 +52,7 @@ namespace WishMeAList.ViewModels
             try
             {
                 HttpClient client = new HttpClient();
-                var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/WishLists/user/"+1/*+UserManager.CurrentUser.UserID*/));
+                var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/WishLists/user/"+UserManager.CurrentUser.UserID));
                 WishLists = JsonConvert.DeserializeObject<ObservableCollection<WishList>>(json);
                 RaisePropertyChanged("ViewWishesVisibility");
             }
@@ -67,7 +67,7 @@ namespace WishMeAList.ViewModels
         {
            this._parent.CurrentData = new AddWishListViewModel(WishLists, this._parent);
         }
-        private void DeleteWishList()
+        private async Task DeleteWishList()
         {
             if( WishList == null)
             {
@@ -76,7 +76,9 @@ namespace WishMeAList.ViewModels
             }
             _wishLists.Remove(WishList);
             UserManager.CurrentUser.WishListsOwning = _wishLists;
-            RaisePropertyChanged("WishLists"); 
+            HttpClient client = new HttpClient();
+            var res = await client.DeleteAsync("http://localhost:65172/api/wishlists/" + WishList.WishListID);
+            RaisePropertyChanged("WishLists");
             RaisePropertyChanged("ViewWishesVisibility");
         }
   

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -51,15 +54,25 @@ namespace WishMeAList.ViewModels
                 Title = this.Title,
                 DateOfEvent = this._dateOfEvent,
                 Wishes = new Collection<Wish>(),
-                Accessors = SelectedUsers
+                Accessors = SelectedUsers,
+                OwnerID = UserManager.CurrentUser.UserID
             };
-            WishLists.Add(this.WishList);
             UserManager.CurrentUser.WishListsOwning = WishLists;
-
-            this._parent.CurrentData = new WishListsViewModel(this._parent);
-        
+            PostWishList();   
         }
-
+        private async void PostWishList()
+        {
+            string wishListJson = JsonConvert.SerializeObject(this.WishList);
+            HttpClient client = new HttpClient();
+            var res = await client.PostAsync("http://localhost:65172/api/wishlists/", new StringContent(wishListJson, System.Text.Encoding.UTF8, "application/json"));
+            Debug.Write(res);
+            if (res.Content != null)
+            {
+                string newWishListJson = await res.Content.ReadAsStringAsync();
+                WishLists.Add(JsonConvert.DeserializeObject<WishList>(newWishListJson));
+            }
+            this._parent.CurrentData = new WishListsViewModel(this._parent);
+        }
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             User user = (User)e.ClickedItem;
