@@ -30,22 +30,22 @@ namespace WishMeAListAPI.Controllers
         [HttpGet]
         public IEnumerable<WishList> GetAll()
         {
-            return _context.WishLists.Include(wl => wl.Wishes).Include(wl => wl.Accessors).ThenInclude(wla => wla.User).ToList();
+            return _context.WishLists.Include(wl => wl.Wishes).ThenInclude(w => w.Buyer).Include(wl => wl.Accessors).ThenInclude(wla => wla.User).ToList();
         }
         [HttpGet("user/{id}", Name ="GetWishListByUserID")]
         public IEnumerable<WishList> GetByUserID(long id)
         {
-            return _context.WishLists.Include(wl => wl.Wishes).Where(wl => wl.OwnerID == id);
+            return _context.WishLists.Include(wl => wl.Wishes).ThenInclude(w => w.Buyer).Where(wl => wl.OwnerID == id);
         }
         [HttpGet("accessor/{id}", Name = "GetWishListByAccessorID")]
         public IEnumerable<WishList> GetByAccessorID(long id)
         {
-            return _context.WishLists.Include(wl => wl.Wishes).Where(wl => wl.Accessors.Select(a => a.UserID).Any(a => a == id));
+            return _context.WishLists.Include(wl => wl.Wishes).ThenInclude(w => w.Buyer).Where(wl => wl.Accessors.Select(a => a.UserID).Any(a => a == id));
         }
         [HttpGet("accessors/{id}", Name = "GetAccessorsByWishListID")]
         public IEnumerable<User> GetAccessorsByID(long id)
         {
-            return _context.WishListAccessors.Include(wla => wla.User).ThenInclude(u => u.Notifications).Include(wla => wla.WishList).Where(wla => wla.WishListID == id).Select(wla => wla.User).Include(u => u.WishesBuying).Include(u => u.WishListsAccessing).Include(u => u.WishListsOwning);
+            return _context.WishListAccessors.Include(wla => wla.User).ThenInclude(u => u.Notifications).Include(wla => wla.WishList).Where(wla => wla.WishListID == id).Select(wla => wla.User).Include(u => u.WishesBuying).ThenInclude(w => w.Buyer).Include(u => u.WishListsAccessing).Include(u => u.WishListsOwning);
         }
         [HttpGet("{id}", Name = "GetWishList")]
         public IActionResult GetById(long id)
