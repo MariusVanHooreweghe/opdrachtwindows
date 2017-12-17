@@ -11,7 +11,7 @@ namespace WishMeAList.Models
 {
     public class Notification : INotifyPropertyChanged
     {
-        public int NoitifcationID { get; set; }
+        public int NotifcationID { get; set; }
         public User Sender { get; set; }
         public User Reciever { get; set; }
         public NotificationType Type { get; set; }
