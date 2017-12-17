@@ -15,6 +15,7 @@
                 <Button Content="Wishlists following" Command="{Binding ShowWishlistsAccessingCommand}" Margin="0,0,0,10" HorizontalAlignment="Left" Width="150"/>
                 <Button Content="Friends" Command="{Binding ShowFriendsCommand}" Width="150" Margin="0,0,0,10"/>
                 <Button Content="Wishes I'm buying" Command="{Binding ShowWishesBuyingCommand}" Width="150"/>
+                <Button Content="Logout" Click="Logout" Margin="0,30,0,10"/>
             </StackPanel>
         </SplitView.Pane>
         <ContentControl HorizontalContentAlignment="Stretch" Content="{Binding CurrentData}" ContentTemplate="{Binding CurrentData.Template}"/>

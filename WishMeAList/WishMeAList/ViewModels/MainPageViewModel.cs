@@ -38,7 +38,7 @@ namespace WishMeAList.ViewModels
 
         public void ShowNavigator()
         {
-            CurrentData = new NavigatorViewModel();
+            CurrentData = new NavigatorViewModel(this);
         }
     }
 }

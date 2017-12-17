@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using WishMeAList.Models;
+using WishMeAList.Utils;
 using WishMeAList.ViewModels;
 
 namespace WishMeAList.Views
@@ -53,6 +54,7 @@ namespace WishMeAList.Views
             }else if (txtFirstName.Text.Equals("") || txtLastName.Text.Equals(""))
             {
                 DisplayDialog("You have empty fields", "Please fill in all fields and try again.");
+                return;
 
             }
             User user = new User {
@@ -62,7 +64,7 @@ namespace WishMeAList.Views
                 LastName = txtLastName.Text
             };
             PostUser(user);
-
+            UserManager.CurrentUser = Users.Where(val => val.Username.Equals(username)).FirstOrDefault();
             RegisterViewModel vm = DataContext as RegisterViewModel;
             vm.ShowNavigatorView();
         }
@@ -76,10 +78,12 @@ namespace WishMeAList.Views
             };
             ContentDialogResult result = await dialog.ShowAsync();
         }
+        
 
         private async void PostUser(User user)
         {
             string userJson = JsonConvert.SerializeObject(user);
+            Debug.WriteLine(userJson);
             HttpClient client = new HttpClient();
             var res = await client.PostAsync("http://localhost:65172/api/users/", new StringContent(userJson, System.Text.Encoding.UTF8, "application/json"));
             if (res.Content != null)
