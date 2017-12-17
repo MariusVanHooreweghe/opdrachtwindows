@@ -51,12 +51,7 @@ namespace WishMeAListAPI.Controllers
             }
 
             _context.Users.Add(item);
-            if (item.WishListsAccessing?.Count() != 0)
-            {
-                foreach (WishListAccessor wla in item.WishListsAccessing){
-                    _context.WishListAccessors.Add(wla);
-                }
-            }
+    
             _context.SaveChanges();
 
             return CreatedAtRoute("GetUser", new { id = item.UserID }, item);
