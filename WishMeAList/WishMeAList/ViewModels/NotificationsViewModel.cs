@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WishMeAList.Models;
@@ -13,17 +16,37 @@ namespace WishMeAList.ViewModels
     {
         public ObservableCollection<Notification> Notifications
         {
-            get { return new ObservableCollection<Notification>(UserManager.CurrentUser.Notifications.OrderBy(not => not.Date)); }
+            get; set; 
         }
 
         public NotificationsViewModel()
         {
-            foreach (Notification not in Notifications)
-            {
-                not.HasBeenRead = true;
-            }
+            InitNotifications();
+            
         }
 
+        private async Task InitNotifications()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/Notifications/user/" + UserManager.CurrentUser.UserID));
+                Notifications = JsonConvert.DeserializeObject<ObservableCollection<Notification>>(json);
+                foreach (Notification not in Notifications)
+                {
+                    not.HasBeenRead = true;
+                    string notJson = JsonConvert.SerializeObject(not);
+                    await client.PutAsync("http://localhost:65172/api/Notifications/", new StringContent(notJson, System.Text.Encoding.UTF8, "application/json"));
+                }
+                RaisePropertyChanged("Notifications");
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                Notifications = new ObservableCollection<Notification>();
+            }
+            
+        }
 
         public void AcceptNotification(Notification notification)
         {

@@ -22,7 +22,7 @@ namespace WishMeAList.ViewModels
 
         private void RequestAccess()
         {
-            Friend.Notifications.Add(new Notification(UserManager.CurrentUser, Friend, NotificationType.REQUEST_FOR_ACCESS, SelectedWishList));
+            Friend.Notifications.Add(new Notification(UserManager.CurrentUser, Friend, NotificationType.REQUEST_FOR_ACCESS, DateTime.Now, SelectedWishList));
         }
     }
 }

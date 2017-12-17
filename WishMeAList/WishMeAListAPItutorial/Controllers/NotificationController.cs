@@ -35,6 +35,11 @@ namespace WishMeAListAPI.Controllers
             }
             return new ObjectResult(item);
         }
+        [HttpGet("user/{id}", Name = "GetNotificationByUser")]
+        public IEnumerable<Notification> GetByUserId(long id)
+        { 
+            return _context.Notifications.Include(n => n.Reciever).Include(n => n.Sender).Include(n => n.WishList).Where(w => w.RecieverID == id);
+        }
         [HttpPost]
         public IActionResult Create([FromBody] Notification item)
         {
