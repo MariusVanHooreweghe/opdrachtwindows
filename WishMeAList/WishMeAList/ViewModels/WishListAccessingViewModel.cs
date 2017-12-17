@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using WishMeAList.Models;
@@ -70,20 +72,30 @@ namespace WishMeAList.ViewModels
             if (Wish.IsChecked)
             {
                 Wish.IsChecked = false;
-                Wish.Buyer = UserManager.CurrentUser;
+                Wish.Buyer = null;
+                Wish.BuyerID = null;
                 UserManager.CurrentUser.WishesBuying.Remove(Wish);
-
             }
             else
             {
                 Wish.IsChecked = true;
-                Wish.Buyer = null;
+                Wish.Buyer = UserManager.CurrentUser;
+                Wish.BuyerID = Wish.Buyer.UserID;
                 UserManager.CurrentUser.WishesBuying.Add(Wish);
             }
+            UpdateWish(Wish);
             RaisePropertyChanged("IsChecked");
             RaisePropertyChanged("Wish");
             RaisePropertyChanged("Wishes");
         }
+
+        private async Task UpdateWish(Wish wish)
+        {
+            HttpClient client = new HttpClient();
+            string wishJson = JsonConvert.SerializeObject(Wish);
+            await client.PutAsync("http://localhost:65172/api/Wishes/" + wish.WishID, new StringContent(wishJson, System.Text.Encoding.UTF8, "application/json"));
+        }
+
 
         private void OpenAccessors()
         {

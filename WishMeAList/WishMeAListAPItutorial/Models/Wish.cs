@@ -21,6 +21,7 @@ namespace WishMeAListAPItutorial.Models
         public string ImageURL { get; set; }
         [ForeignKey("User")]
         public int? BuyerID { get; set; }
+        public User Buyer { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

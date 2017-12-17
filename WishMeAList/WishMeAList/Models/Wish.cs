@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,6 +20,8 @@ namespace WishMeAList.Models
         public WishCategorie Categorie { get; set; }
         public bool IsChecked { get; set; }
         public string ImageURL { get; set; }
+        public int? BuyerID { get; set; }
+        [JsonIgnore]
         public User Buyer { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
