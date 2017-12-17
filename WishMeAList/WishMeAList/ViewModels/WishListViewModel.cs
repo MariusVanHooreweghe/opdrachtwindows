@@ -83,16 +83,17 @@ namespace WishMeAList.ViewModels
                 return;
             }
             _wishes.Remove(WishToDelete);
+            if (WishToDelete.Buyer != null)
+            {
+                NotifyBuyer();
+            }
             //UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
             //string wishJson = JsonConvert.SerializeObject(WishToDelete);
             HttpClient client = new HttpClient();
             var res = await client.DeleteAsync("http://localhost:65172/api/wishes/"+WishToDelete.WishID); 
             RaisePropertyChanged("Wishes");
             RaisePropertyChanged("ViewWishesVisibility");
-            if (WishToDelete.IsChecked)
-            {
-                NotifyBuyer();
-            }
+       
         }
 
         private async void DisplayDialog()
@@ -131,7 +132,7 @@ namespace WishMeAList.ViewModels
         private async Task NotifyBuyer()
         {
             HttpClient client = new HttpClient();
-            Notification notification = new Notification(UserManager.CurrentUser, WishToDelete.Buyer, NotificationType.WISH_DELETED, WishList);
+            Notification notification = new Notification(UserManager.CurrentUser, WishToDelete.Buyer, NotificationType.WISH_DELETED, DateTime.Now);
             try
             {
                 var notificationJson = JsonConvert.SerializeObject(notification,
@@ -140,8 +141,13 @@ namespace WishMeAList.ViewModels
                         ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
                     });
                 Debug.WriteLine(notificationJson);
-                await client.PostAsync("http://localhost:65172/api/notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
-       
+                var resNotification =
+             await client.PostAsync("http://localhost:65172/api/notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+                if (resNotification.Content != null)
+                {
+                    string newNotificationJson = await resNotification.Content.ReadAsStringAsync();
+                    WishToDelete.Buyer.Notifications.Add(JsonConvert.DeserializeObject<Notification>(newNotificationJson));
+                }
             }
             catch (Exception e)
             {
