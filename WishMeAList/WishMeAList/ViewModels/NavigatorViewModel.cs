@@ -22,12 +22,14 @@ namespace WishMeAList.ViewModels
         public RelayCommand ShowWishesBuyingCommand { get; set; }
         public RelayCommand ShowFriendsCommand { get; set; }
         public RelayCommand ShowNotificationsCommand { get; set; }
+        private MainPageViewModel Mpvm { get; set; }
 
-        public NavigatorViewModel()
+        public NavigatorViewModel(MainPageViewModel mpvm)
         {
             // Backend data
             //initData();
             // ----------
+            Mpvm = mpvm;
             ShowWishlistsOwningCommand = new RelayCommand(_ => ShowWishlistsOwning());
             ShowWishlistsAccessingCommand = new RelayCommand(_ => ShowWishlistsAccessing());
             ShowWishesBuyingCommand = new RelayCommand(_ => ShowWishesBuying());
@@ -51,6 +53,8 @@ namespace WishMeAList.ViewModels
             CurrentData = new WishesBuyingViewModel();
         }
 
+    
+
         private void ShowFriends()
         {
             CurrentData = new FriendsViewModel(this);
@@ -59,6 +63,11 @@ namespace WishMeAList.ViewModels
         private void ShowNotifications()
         {
             CurrentData = new NotificationsViewModel();
+        }
+        public void ShowLogin()
+        {
+            
+            Mpvm.CurrentData = new LogInViewModel(Mpvm);
         }
 
         // Dummy data

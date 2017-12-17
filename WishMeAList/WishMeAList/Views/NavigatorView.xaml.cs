@@ -12,6 +12,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WishMeAList.Utils;
+using WishMeAList.ViewModels;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -25,6 +27,13 @@ namespace WishMeAList.Views
         public NavigatorView()
         {
             this.InitializeComponent();
+        }
+
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            UserManager.CurrentUser = null;
+            NavigatorViewModel vm = DataContext as NavigatorViewModel;
+            vm.ShowLogin();
         }
     }
 }
