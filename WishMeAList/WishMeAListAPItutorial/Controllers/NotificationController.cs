@@ -23,12 +23,12 @@ namespace WishMeAListAPI.Controllers
         [HttpGet]
         public IEnumerable<Notification> GetAll()
         {
-            return _context.Notifications.Include(n => n.Reciever).Include(n => n.Sender).ToList();
+            return _context.Notifications.Include(n => n.Reciever).Include(n => n.Sender).Include(n => n.WishList).ToList();
         }
         [HttpGet("{id}", Name = "GetNotification")]
         public IActionResult GetById(long id)
         {
-            var item = _context.Notifications.FirstOrDefault(n => n.NotificationID == id);
+            var item = _context.Notifications.Include(n => n.Reciever).Include(n => n.Sender).Include(n => n.WishList).FirstOrDefault(n => n.NotificationID == id);
             if (item == null)
             {
                 return NotFound();

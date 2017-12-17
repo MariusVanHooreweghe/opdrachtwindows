@@ -101,9 +101,9 @@ namespace WishMeAList.ViewModels
 
         private async Task SubductAccess()
         {
-            //List<Wish> wishesBuying = _parent.WishList.Wishes.Where(wish => wish.Buyer == SelectedAccessor).ToList();
+            List<Wish> wishesBuying = _parent.WishList.Wishes.Where(wish => wish.Buyer == SelectedAccessor).ToList();
             //SelectedAccessor.WishListsAccessing.Remove(_parent.WishList);
-            //_parent.WishList.Accessors.Remove(SelectedAccessor);
+            _parent.WishList.Accessors.Remove(SelectedAccessor);
             //foreach (Wish wish in wishesBuying)
             //{
             //    SelectedAccessor.WishesBuying.Remove(wish);
@@ -112,8 +112,8 @@ namespace WishMeAList.ViewModels
             //SelectedAccessor.Notifications.Add(new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, _parent.WishList));
             HttpClient client = new HttpClient();
             var res = await client.DeleteAsync("http://localhost:65172/api/wishlists/" + _parent.WishList.WishListID + "/accessors/" + SelectedAccessor.UserID);
-            if (SelectedAccessor.Notifications == null)
-                SelectedAccessor.Notifications = new Collection<Notification>();
+            //if (SelectedAccessor.Notifications == null)
+            //    SelectedAccessor.Notifications = new Collection<Notification>();
             Notification notification = new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, _parent.WishList);
             try {
                 var notificationJson = JsonConvert.SerializeObject(notification,
@@ -123,12 +123,13 @@ namespace WishMeAList.ViewModels
 
                     });
                 Debug.WriteLine(notificationJson);
-                var resNotification = await client.PostAsync("http://localhost:65172/api/notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
-                if (resNotification.Content != null)
-                {
-                    string newNotificationJson = await resNotification.Content.ReadAsStringAsync();
-                    SelectedAccessor.Notifications.Add(JsonConvert.DeserializeObject<Notification>(newNotificationJson));
-                }
+                //var resNotification = 
+                    await client.PostAsync("http://localhost:65172/api/notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+                //if (resNotification.Content != null)
+                //{
+                //    string newNotificationJson = await resNotification.Content.ReadAsStringAsync();
+                //    SelectedAccessor.Notifications.Add(JsonConvert.DeserializeObject<Notification>(newNotificationJson));
+                //}
             } catch (Exception e)
             {
                 Debug.Write(e.Message);

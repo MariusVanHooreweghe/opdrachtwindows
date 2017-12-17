@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -11,21 +13,41 @@ namespace WishMeAList.Models
 {
     public class Notification : INotifyPropertyChanged
     {
-        public int NotifcationID { get; set; }
+        [JsonProperty]
+        public int NotificationID { get; set; }
+        [ForeignKey("User")]
+        [JsonProperty]
+        public int SenderID { get; set; }
+        [JsonIgnore]
         public User Sender { get; set; }
+        [ForeignKey("User")]
+        [JsonProperty]
+        public int RecieverID { get; set; }
+        [JsonIgnore]
         public User Reciever { get; set; }
+        [JsonProperty]
         public NotificationType Type { get; set; }
+        [ForeignKey("WishList")]
+        [JsonProperty]
+        public int WishListID { get; set; }
+        [JsonIgnore]
         public WishList WishList { get; set; }
+        [JsonProperty]
         public String Message { get; set; }
+        [JsonProperty]
         public bool HasBeenRead { get; set; }
+        [JsonProperty]
         public DateTime Date { get; set; }
 
         public Notification(User sender, User reciever, NotificationType type, WishList wishList = null)
         {
             Sender = sender;
+            SenderID = sender.UserID;
             Reciever = reciever;
+            RecieverID = Reciever.UserID;
             Type = type;
             WishList = wishList;
+            WishListID = wishList.WishListID;
             Date = DateTime.Now;
             HasBeenRead = false;
             // Init message

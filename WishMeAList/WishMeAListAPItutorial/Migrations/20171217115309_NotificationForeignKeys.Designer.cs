@@ -12,9 +12,10 @@ using WishMeAListAPItutorial.Models;
 namespace WishMeAListAPItutorial.Migrations
 {
     [DbContext(typeof(WishListContext))]
-    partial class WishListContextModelSnapshot : ModelSnapshot
+    [Migration("20171217115309_NotificationForeignKeys")]
+    partial class NotificationForeignKeys
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
