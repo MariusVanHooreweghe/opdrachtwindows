@@ -29,12 +29,12 @@ namespace WishMeAListAPI.Controllers
         [HttpGet]
         public IEnumerable<Wish> GetAll()
         {
-            return _context.Wishes.ToList();
+            return _context.Wishes.Include(u => u.Buyer).ToList();
         }
         [HttpGet("{id}", Name = "GetWish")]
         public IActionResult GetById(long id)
         {
-            var item = _context.Wishes.FirstOrDefault(t => t.WishID == id);
+            var item = _context.Wishes.Include(u => u.Buyer).FirstOrDefault(t => t.WishID == id);
             if (item == null)
             {
                 return NotFound();
@@ -44,7 +44,7 @@ namespace WishMeAListAPI.Controllers
         [HttpGet("buyer/{id}", Name = "GetWishesByBuyerID")]
         public IEnumerable<Wish> GetWishesByBuyerId(long id)
         {
-            return _context.Wishes.Where(w => w.BuyerID == id).ToList();
+            return _context.Wishes.Where(w => w.BuyerID == id).Include(w => w.Buyer).ToList();
         }
         [HttpPost]
         public IActionResult Create([FromBody] Wish item)

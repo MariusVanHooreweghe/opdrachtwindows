@@ -30,7 +30,7 @@ namespace WishMeAList.ViewModels
             try
             {
                 HttpClient client = new HttpClient();
-                var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/Notifications/user/" + UserManager.CurrentUser.UserID));
+                    var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/Notifications/user/" + UserManager.CurrentUser.UserID));
                 Notifications = JsonConvert.DeserializeObject<ObservableCollection<Notification>>(json);
                 foreach (Notification not in Notifications)
                 {
