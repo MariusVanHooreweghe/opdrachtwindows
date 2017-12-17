@@ -78,6 +78,7 @@ namespace WishMeAList.Views
             };
             ContentDialogResult result = await dialog.ShowAsync();
         }
+        
 
         private async void PostUser(User user)
         {
