@@ -68,7 +68,7 @@ namespace WishMeAList.ViewModels
         public void initData()
         {
             
-            User ThisUser = new User {
+            User OtherUser = new User {
                 UserID = 2,
                 FirstName = "Ruben",
                 LastName = "Standaert",
@@ -77,7 +77,7 @@ namespace WishMeAList.ViewModels
                 WishesBuying = new Collection<Wish>(),
                 Notifications = new Collection<Notification>()
             };
-            User OtherUser = new User {
+            User ThisUser = new User {
                 UserID = 1,
                 FirstName = "Thibault",
                 LastName = "Gobert",
