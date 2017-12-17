@@ -83,7 +83,7 @@ namespace WishMeAList.ViewModels
                 return;
             }
             _wishes.Remove(WishToDelete);
-            if (WishToDelete.Buyer != null)
+            if (WishToDelete.BuyerID != null)
             {
                 NotifyBuyer();
             }
@@ -132,7 +132,11 @@ namespace WishMeAList.ViewModels
         private async Task NotifyBuyer()
         {
             HttpClient client = new HttpClient();
-            Notification notification = new Notification(UserManager.CurrentUser, WishToDelete.Buyer, NotificationType.WISH_DELETED, DateTime.Now);
+
+            var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/Users/" + WishToDelete.BuyerID));
+            User user = JsonConvert.DeserializeObject<User>(json);
+
+            Notification notification = new Notification(UserManager.CurrentUser, user, NotificationType.WISH_DELETED, DateTime.Now, WishList);
             try
             {
                 var notificationJson = JsonConvert.SerializeObject(notification,
@@ -142,11 +146,19 @@ namespace WishMeAList.ViewModels
                     });
                 Debug.WriteLine(notificationJson);
                 var resNotification =
-             await client.PostAsync("http://localhost:65172/api/notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+             await client.PostAsync("http://localhost:65172/api/Notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+                Debug.WriteLine(resNotification);
                 if (resNotification.Content != null)
                 {
                     string newNotificationJson = await resNotification.Content.ReadAsStringAsync();
-                    WishToDelete.Buyer.Notifications.Add(JsonConvert.DeserializeObject<Notification>(newNotificationJson));
+                    if (user.Notifications == null)
+                    {
+                        user.Notifications = new Collection<Notification>();
+                    }
+                    var addedNotification = JsonConvert.DeserializeObject<Notification>(newNotificationJson);
+                    addedNotification.Sender = UserManager.CurrentUser;
+                    addedNotification.Reciever = user;
+                    user.Notifications.Add(addedNotification);
                 }
             }
             catch (Exception e)
