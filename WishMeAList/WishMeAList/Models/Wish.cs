@@ -12,14 +12,20 @@ namespace WishMeAList.Models
 {
     public class Wish : INotifyPropertyChanged
     {
+        [JsonProperty]
         public int WishID { get; set; }
         [ForeignKey("WishList")]
         public int WishListID { get; set; }
+        [JsonProperty]
         public string Title { get; set; }
+        [JsonProperty]
         public string Description { get; set; }
+        [JsonProperty]
         public WishCategorie Categorie { get; set; }
+        [JsonProperty]
         public bool IsChecked { get; set; }
         public string ImageURL { get; set; }
+        [JsonProperty]
         public int? BuyerID { get; set; }
         [JsonIgnore]
         public User Buyer { get; set; }
