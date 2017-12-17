@@ -15,7 +15,11 @@
                 <TextBlock Text="Choose a Category: " Margin="5,20,10,0"/>
                 <ComboBox x:Name="Categorie" ItemsSource="{Binding EnumVal}" SelectedItem="{Binding Path=FilterCategory, Mode=TwoWay}"  PlaceholderText="Select category" Margin="0,20,0,20"></ComboBox>
             </StackPanel>
-            <ListView ItemsSource="{Binding Wishes}" SelectedItem="{Binding Wish, Mode=TwoWay}">
+            <StackPanel Orientation="Horizontal"  Margin="0,15,0,0">
+                <Button Content="Buy this wish" Command="{Binding BuyWishCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
+                <Button Content="Accessors" Command="{Binding OpenAccessorsCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
+            </StackPanel>
+            <ListView ItemsSource="{Binding Wishes}" SelectedItem="{Binding Wish, Mode=TwoWay}" Margin="0,15,0,0">
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <StackPanel>
@@ -30,10 +34,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackPanel Orientation="Horizontal"  Margin="0,15,0,0">
-                <Button Content="Buy this wish" Command="{Binding BuyWishCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
-                <Button Content="Accessors" Command="{Binding OpenAccessorsCommand}" HorizontalAlignment="Left" Margin="15,0,0,0"/>
-            </StackPanel>
+    
         </StackPanel>
     </ScrollViewer>
 </Page>

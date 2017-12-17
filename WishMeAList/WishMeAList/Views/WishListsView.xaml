@@ -12,7 +12,12 @@
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
             <TextBlock Text="My WishLists" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding WishLists}" SelectedItem="{Binding WishList, Mode=TwoWay}" >
+            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
+                <Button Content="Add WishList" Command="{Binding AddWishListCommand}" Margin="15,0,0,0"/>
+                <Button Content="Delete WishList" Command="{Binding DeleteWishListCommand}" Visibility="{Binding ViewWishesVisibility}" Margin="15,0,0,0"/>
+                <Button Content="View wishes" Command="{Binding ViewWishesCommand}" Visibility="{Binding ViewWishesVisibility}" Margin="15,0,0,0"/>
+            </StackPanel>
+            <ListView ItemsSource="{Binding WishLists}" SelectedItem="{Binding WishList, Mode=TwoWay}" Margin="0,15,0,0" >
                 <ListView.ItemTemplate >
                     <DataTemplate >
                         <StackPanel>
@@ -23,11 +28,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
-                <Button Content="Add WishList" Command="{Binding AddWishListCommand}" Margin="15,0,0,0"/>
-                <Button Content="Delete WishList" Command="{Binding DeleteWishListCommand}" Visibility="{Binding ViewWishesVisibility}" Margin="15,0,0,0"/>
-                <Button Content="View wishes" Command="{Binding ViewWishesCommand}" Visibility="{Binding ViewWishesVisibility}" Margin="15,0,0,0"/>
-            </StackPanel>
+            
         </StackPanel>
     </ScrollViewer>
 </Page>
