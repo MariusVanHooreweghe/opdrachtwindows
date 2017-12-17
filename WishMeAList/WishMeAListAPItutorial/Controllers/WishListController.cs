@@ -90,6 +90,17 @@ namespace WishMeAListAPI.Controllers
             _context.SaveChanges();
             return new NoContentResult();
         }
+        [HttpPost("accessor/{userid}/create/{wishlistid}")]
+        public IActionResult CreateAccess(long userid, long wishlistid, [FromBody] WishList wishList)
+        {
+            WishListAccessor wla = new WishListAccessor();
+            wla.UserID = (int)userid;
+            wla.WishList = wishList;
+            wla.WishListID = (int)wishlistid;
+            _context.Add(wla);
+            _context.SaveChanges();
+            return new NoContentResult();
+        }
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
