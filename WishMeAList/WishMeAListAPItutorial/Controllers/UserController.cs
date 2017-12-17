@@ -42,6 +42,7 @@ namespace WishMeAListAPI.Controllers
             IEnumerable<User> befrienderFriends = _context.Friendships.Include(f => f.Befriender).ThenInclude(f => f.WishListsOwning).Where(f => f.BefriendedID == id).Select(f => f.Befriender).Include(f => f.WishListsOwning).ToList();
             return Enumerable.Union(befriendedFriends, befrienderFriends);
         }
+        [HttpGet("friendships/wishlist/{wishlistid}/user/{userid}", Name ="GetOtherFriends")]
         public IEnumerable<User> GetOtherFriendsByWishListIdAndUserId(long wishlistid, long userid)
         {
             return GetFriendsById(userid).Where(u => !u.WishListsAccessing.Where(wla => wla.WishListID == wishlistid).Any(wla => wla.UserID == userid));

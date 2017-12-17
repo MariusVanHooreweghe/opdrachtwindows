@@ -49,12 +49,15 @@ namespace WishMeAList.ViewModels
         {
             _parent = parent;
             initAccessors();
+            initOtherFriends();
              Title =  _parent.WishList.Title + " - Accessors";
              _selectedFriends = new Collection<User>();
             AddAccessorsCommand = new RelayCommand(_ => AddAccessors());
             SubductAccessCommand = new RelayCommand(_ => SubductAccess());
 
         }
+
+
 
         private async Task initAccessors()
         {
@@ -74,7 +77,24 @@ namespace WishMeAList.ViewModels
             RaisePropertyChanged("OtherFriends");
             RaisePropertyChanged("InviteMoreFriendsVisibility");
         }
-
+        private async Task initOtherFriends()
+        {
+            var accessorsJson = "{}";
+            try
+            {
+                HttpClient client = new HttpClient();
+                accessorsJson = await client.GetStringAsync(new Uri("http://localhost:65172/api/users/friendships/wishlist/" + _parent.WishList.WishListID+"/user"+""));
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+            _parent.WishList.Accessors = JsonConvert.DeserializeObject<ObservableCollection<User>>(accessorsJson);
+            RaisePropertyChanged("FriendsVisibility");
+            RaisePropertyChanged("Accessors");
+            RaisePropertyChanged("OtherFriends");
+            RaisePropertyChanged("InviteMoreFriendsVisibility");
+        }
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
             User user = (User) e.ClickedItem;
