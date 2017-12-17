@@ -10,6 +10,8 @@ namespace WishMeAList.Models
     public class User
     {
         public int UserID { get; set; }
+        public String Username { get; set; }
+        public String Password { get; set; }
         public String FirstName { get; set; }
         public String LastName { get; set; }
         public String Name { get { return FirstName + " " + LastName; } }

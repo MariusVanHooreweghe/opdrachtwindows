@@ -29,7 +29,7 @@ namespace WishMeAList.Views
         private void LogIn(object sender, RoutedEventArgs e)
         {
             // TO DO
-            Debug.WriteLine($"Implement logging in logic here with email {txtEmail.Text} and password {txtPassword.Password.ToString()}");
+            Debug.WriteLine($"Implement logging in logic here with username {txtUsername.Text} and password {txtPassword.Password.ToString()}");
             LogInViewModel vm = DataContext as LogInViewModel;
             vm.ShowNavigatorView();
         }

@@ -12,9 +12,12 @@
             <TextBlock TextWrapping="Wrap" Text="Wish me a List." FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
             <TextBlock TextWrapping="Wrap" Text="Register" FontSize="36" HorizontalAlignment="Center" Margin="0,0,0,50"/>
             <StackPanel BorderThickness="1" BorderBrush="Gray" Padding="20">
-                <TextBox x:Name="txtEmail" PlaceholderText="E-mail" Margin="0,0,0,20"></TextBox>
+                <TextBox x:Name="txtUsername" PlaceholderText="Username" Margin="0,0,0,20"></TextBox>
                 <PasswordBox x:Name="txtPassword" PlaceholderText="Password" Margin="0,0,0,8"></PasswordBox>
                 <PasswordBox x:Name="txtPasswordRepetition" PlaceholderText="Repeat Password" Margin="0,0,0,8"></PasswordBox>
+                <TextBox x:Name="txtFirstName" PlaceholderText="Firstname"  Margin="0,0,0,20"></TextBox>
+                <TextBox x:Name="txtLastName" PlaceholderText="Lastname" Margin="0,0,0,20"></TextBox>
+
                 <Button Content="Register" Click="Register"/>
                 <HyperlinkButton Command="{Binding ShowLogInCommand}"
                     x:Name="lnkRegister" Margin="5,0,0,0" FontSize="12" Foreground="Black" Content="I already have an account"/>

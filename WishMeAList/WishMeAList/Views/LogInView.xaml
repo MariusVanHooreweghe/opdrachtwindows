@@ -13,7 +13,7 @@
             <TextBlock TextWrapping="Wrap" Text="Wish me a List." FontSize="56" FontFamily="Poor Richard" Margin="0,50"/>
             <TextBlock TextWrapping="Wrap" Text="Please, log in" FontSize="36" HorizontalAlignment="Center" Margin="0,0,0,50"/>
             <StackPanel BorderThickness="1" BorderBrush="Gray" Padding="20">
-                <TextBox x:Name="txtEmail" PlaceholderText="E-mail" Margin="0,0,0,20"></TextBox>
+                <TextBox x:Name="txtUsername" PlaceholderText="Username" Margin="0,0,0,20"></TextBox>
                 <PasswordBox x:Name="txtPassword" PlaceholderText="Password" Margin="0,0,0,8"></PasswordBox>
                 <Button Content="Log in" Click="LogIn"/>
                 <HyperlinkButton Command="{Binding ShowRegisterCommand}"
