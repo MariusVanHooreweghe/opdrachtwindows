@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -88,6 +89,10 @@ namespace WishMeAList.ViewModels
             var res = await client.DeleteAsync("http://localhost:65172/api/wishes/"+WishToDelete.WishID); 
             RaisePropertyChanged("Wishes");
             RaisePropertyChanged("ViewWishesVisibility");
+            if (WishToDelete.IsChecked)
+            {
+                NotifyBuyer();
+            }
         }
 
         private async void DisplayDialog()
@@ -122,6 +127,29 @@ namespace WishMeAList.ViewModels
         {
             this._parent.CurrentData = new AccessorsViewModel(this);
         }
+
+        private async Task NotifyBuyer()
+        {
+            HttpClient client = new HttpClient();
+            Notification notification = new Notification(UserManager.CurrentUser, WishToDelete.Buyer, NotificationType.WISH_DELETED, WishList);
+            try
+            {
+                var notificationJson = JsonConvert.SerializeObject(notification,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+                    });
+                Debug.WriteLine(notificationJson);
+                await client.PostAsync("http://localhost:65172/api/notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+       
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+
+        }
+
     }
 
 }

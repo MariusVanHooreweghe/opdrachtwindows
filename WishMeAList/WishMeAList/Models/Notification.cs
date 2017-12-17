@@ -61,6 +61,7 @@ namespace WishMeAList.Models
                 case NotificationType.FRIEND_CONFIRMATION_MESSAGE: Message = $"{Sender.Name} has accepted you as a friend"; break;
                 case NotificationType.ACCESS_SUBDUCTED: Message = $"{Sender.Name} has subducted your access to '{WishList.Title}'." +
                         $"Wishes you were planning to buy from that wishlist were removed from your list"; break;
+                case NotificationType.WISH_DELETED: Message = $"{Sender.Name} has deleted a wish you were planning to buy."; break;
             }
         }
 
