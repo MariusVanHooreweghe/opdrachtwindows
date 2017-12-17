@@ -54,7 +54,21 @@ namespace WishMeAList.ViewModels
             notification.Accept();
             Notifications.Remove(notification);
             RaisePropertyChanged("Notifications");
+            if(notification.Type == NotificationType.REQUEST_FOR_ACCESS)
+            {
+                GrantAccess(notification);
+            }
         }
+
+        private async void GrantAccess(Notification notification)
+        {
+            string wishListJson = "{}";
+            Debug.Write(wishListJson);
+            HttpClient client = new HttpClient();
+            var res = await client.PostAsync("http://localhost:65172/api/WishLists/accessor/" + notification.SenderID + "/create/"+ notification.WishListID, new StringContent(wishListJson, System.Text.Encoding.UTF8, "application/json"));
+            Debug.Write(res);
+        }
+
 
         public void DenyNotification(Notification notification)
         {
