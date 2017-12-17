@@ -36,7 +36,7 @@ namespace WishMeAList.ViewModels
                 {
                     not.HasBeenRead = true;
                     string notJson = JsonConvert.SerializeObject(not);
-                    await client.PutAsync("http://localhost:65172/api/Notifications/", new StringContent(notJson, System.Text.Encoding.UTF8, "application/json"));
+                    await client.PutAsync("http://localhost:65172/api/Notifications/"+not.NotificationID, new StringContent(notJson, System.Text.Encoding.UTF8, "application/json"));
                 }
                 RaisePropertyChanged("Notifications");
             }
