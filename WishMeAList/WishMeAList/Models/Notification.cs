@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -67,6 +68,30 @@ namespace WishMeAList.Models
 
         public void Accept()
         {
+            if (Sender.WishListsAccessing == null)
+            {
+                Sender.WishListsAccessing = new Collection<WishList>();
+            }
+            if (WishList.Accessors == null)
+            {
+                WishList.Accessors = new Collection<User>();
+            }
+            if (Sender.Notifications == null)
+            {
+                Sender.Notifications = new Collection<Notification>();
+            }
+            if (Reciever.Notifications == null)
+            {
+                Reciever.Notifications = new Collection<Notification>();
+            }
+            if (Reciever.Friends == null)
+            {
+                Reciever.Friends = new Collection<User>();
+            }
+            if (Reciever.Friends == null)
+            {
+                Reciever.Friends = new Collection<User>();
+            }
             switch (Type)
             {
                 case NotificationType.REQUEST_FOR_ACCESS:

@@ -7,4 +7,13 @@ Studenten:
 	Marius Van Hooreweghe
 	Thibault Gobert
 
-Logingegevens:
+Logingegevens: 
+
+Username: Xooze
+Password: letmein
+
+Username: Ruby 
+Password: letmein
+
+Username: Merjus
+Password: letmein
