@@ -186,7 +186,7 @@ namespace WishMeAList.ViewModels
 
             OtherUser.WishListsOwning = WishListsAccessing;
 
-            Notification accessRequest = new Notification(OtherUser, ThisUser, NotificationType.REQUEST_FOR_ACCESS, wishList2);
+            Notification accessRequest = new Notification(OtherUser, ThisUser, NotificationType.REQUEST_FOR_ACCESS, DateTime.Now, wishList2);
             ThisUser.Notifications.Add(accessRequest);
 
         }

@@ -107,17 +107,23 @@ namespace WishMeAListAPI.Controllers
         public IActionResult DeleteAccess(long wishlistid, long userid)
         {
             var wishListAccessor = _context.WishListAccessors.FirstOrDefault(t => t.WishListID == wishlistid && t.UserID == userid);
-            var wishesBuying = _context.Wishes.Where(w => w.BuyerID == userid).ForEachAsync(item => {
-                item.BuyerID = null;
-                _context.Wishes.Update(item);
-            });
             if (wishListAccessor == null)
             {
                 return NotFound();
             }
             _context.WishListAccessors.Remove(wishListAccessor);
             _context.SaveChanges();
+            DeleteWishBuying(wishlistid, userid);
             return new NoContentResult();
+        }
+
+        private void DeleteWishBuying(long wishlistid, long userid)
+        {
+            _context.Wishes.Where(w => w.BuyerID == userid && w.WishListID == wishlistid).ToList().ForEach(item => {
+                item.BuyerID = null;
+                _context.Wishes.Update(item);
+                _context.SaveChanges();
+            });
         }
     }
 }

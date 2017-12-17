@@ -39,16 +39,16 @@ namespace WishMeAList.Models
         [JsonProperty]
         public DateTime Date { get; set; }
 
-        public Notification(User sender, User reciever, NotificationType type, WishList wishList = null)
+        public Notification(User sender, User reciever, NotificationType type, DateTime date, WishList wishList = null)
         {
             Sender = sender;
             SenderID = sender.UserID;
             Reciever = reciever;
-            RecieverID = Reciever.UserID;
+            RecieverID = Reciever == null? 0 : Reciever.UserID;
             Type = type;
             WishList = wishList;
             WishListID = wishList.WishListID;
-            Date = DateTime.Now;
+            Date = date == null ? DateTime.Now : date;
             HasBeenRead = false;
             // Init message
             switch (Type)
@@ -78,7 +78,7 @@ namespace WishMeAList.Models
                     {
                         WishList.Accessors.Add(Sender);
                     }
-                    Sender.Notifications.Add(new Notification(Reciever, Sender, NotificationType.REQUEST_FOR_ACCESS_CONFIRMATION_MESSAGE, WishList));
+                    Sender.Notifications.Add(new Notification(Reciever, Sender, NotificationType.REQUEST_FOR_ACCESS_CONFIRMATION_MESSAGE, DateTime.Now, WishList));
                     Reciever.Notifications.Remove(this);
                     break;
                 case NotificationType.FRIEND_REQUEST:
@@ -90,7 +90,7 @@ namespace WishMeAList.Models
                     {
                         Reciever.Friends.Add(Sender);
                     }
-                    Sender.Notifications.Add(new Notification(Reciever, Sender, NotificationType.FRIEND_CONFIRMATION_MESSAGE));
+                    Sender.Notifications.Add(new Notification(Reciever, Sender, NotificationType.FRIEND_CONFIRMATION_MESSAGE, DateTime.Now));
                     Reciever.Notifications.Remove(this);
                     break;
                 case NotificationType.INVITE_FOR_ACCESS:
@@ -102,7 +102,7 @@ namespace WishMeAList.Models
                     {
                         WishList.Accessors.Add(Reciever);
                     }
-                    Sender.Notifications.Add(new Notification(Reciever, Sender, NotificationType.INVITE_FOR_ACCESS_CONFIRMATION_MESSAGE, WishList));
+                    Sender.Notifications.Add(new Notification(Reciever, Sender, NotificationType.INVITE_FOR_ACCESS_CONFIRMATION_MESSAGE, DateTime.Now, WishList));
                     Reciever.Notifications.Remove(this);
                     break;
                 default: Reciever.Notifications.Remove(this); break;
