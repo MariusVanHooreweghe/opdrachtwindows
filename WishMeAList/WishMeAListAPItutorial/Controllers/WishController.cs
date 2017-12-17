@@ -41,6 +41,11 @@ namespace WishMeAListAPI.Controllers
             }
             return new ObjectResult(item);
         }
+        [HttpGet("buyer/{id}", Name = "GetWishesByBuyerID")]
+        public IEnumerable<Wish> GetWishesByBuyerId(long id)
+        {
+            return _context.Wishes.Where(w => w.BuyerID == id).ToList();
+        }
         [HttpPost]
         public IActionResult Create([FromBody] Wish item)
         {

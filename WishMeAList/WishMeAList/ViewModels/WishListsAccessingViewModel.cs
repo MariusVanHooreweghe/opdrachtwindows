@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
@@ -22,7 +25,24 @@ namespace WishMeAList.ViewModels
         public WishListsAccessingViewModel( NavigatorViewModel parent)
         {
             this._parent = parent;
-            _wishLists = new ObservableCollection<WishList>(UserManager.CurrentUser.WishListsAccessing);
+            _wishLists = new ObservableCollection<WishList>();
+            InitWishLists();
+        }
+
+        private async Task InitWishLists()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/WishLists/accessor/" + UserManager.CurrentUser.UserID));
+                WishLists = JsonConvert.DeserializeObject<ObservableCollection<WishList>>(json);
+                RaisePropertyChanged("ViewWishesVisibility");
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                WishLists = new ObservableCollection<WishList>();
+            }
         }
 
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
