@@ -19,7 +19,7 @@ namespace WishMeAList.ViewModels
 
         public WishesBuyingViewModel()
         {
-            WishesBuying = new ObservableCollection<Wish>(UserManager.CurrentUser.WishesBuying);
+            WishesBuying = new ObservableCollection<Wish>();
         }
     }
 }

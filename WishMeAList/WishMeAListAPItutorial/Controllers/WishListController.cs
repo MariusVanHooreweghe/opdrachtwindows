@@ -37,6 +37,11 @@ namespace WishMeAListAPI.Controllers
         {
             return _context.WishLists.Include(wl => wl.Wishes).Where(wl => wl.OwnerID == id);
         }
+        [HttpGet("accessor/{id}", Name = "GetWishListByAccessorID")]
+        public IEnumerable<WishList> GetByAccessorID(long id)
+        {
+            return _context.WishLists.Include(wl => wl.Wishes).Where(wl => wl.Accessors.Select(a => a.UserID).Any(a => a == id));
+        }
         [HttpGet("accessors/{id}", Name = "GetAccessorsByWishListID")]
         public IEnumerable<User> GetAccessorsByID(long id)
         {
