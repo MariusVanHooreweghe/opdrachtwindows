@@ -38,10 +38,11 @@ namespace WishMeAList.ViewModels
 
         public ObservableCollection<User> OtherFriends
         {
-            get { return new ObservableCollection<User>(UserManager.CurrentUser.Friends
-                .Where(user => !Accessors.Contains(user)
-                    && user.Notifications.SingleOrDefault(not => not.WishList == _parent.WishList && not.Type == NotificationType.INVITE_FOR_ACCESS) == null)
-                .OrderBy(val => val.FirstName).ThenBy(val => val.LastName)); }
+            get;set;
+            //get { return new ObservableCollection<User>(UserManager.CurrentUser.Friends
+            //    .Where(user => !Accessors.Contains(user)
+            //        && user.Notifications.SingleOrDefault(not => not.WishList == _parent.WishList && not.Type == NotificationType.INVITE_FOR_ACCESS) == null)
+            //    .OrderBy(val => val.FirstName).ThenBy(val => val.LastName)); }
         }
 
         public AccessorsViewModel(WishListViewModel parent)
