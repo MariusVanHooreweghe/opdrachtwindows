@@ -112,7 +112,7 @@ namespace WishMeAList.ViewModels
         {
             foreach (User friend in _selectedFriends)
             {
-                friend.Notifications.Add(new Notification(UserManager.CurrentUser, friend, NotificationType.INVITE_FOR_ACCESS, DateTime.Now, _parent.WishList));
+                friend.Notifications.Add(new Notification(UserManager.CurrentUser, friend, NotificationType.INVITE_FOR_ACCESS, DateTime.Now,_parent.WishList));
             }
             RaisePropertyChanged("FriendsVisibility");
             RaisePropertyChanged("Accessors");
@@ -135,7 +135,7 @@ namespace WishMeAList.ViewModels
             var res = await client.DeleteAsync("http://localhost:65172/api/wishlists/" + _parent.WishList.WishListID + "/accessors/" + SelectedAccessor.UserID);
             //if (SelectedAccessor.Notifications == null)
             //    SelectedAccessor.Notifications = new Collection<Notification>();
-            Notification notification = new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, DateTime.Now, _parent.WishList);
+            Notification notification = new Notification(UserManager.CurrentUser, SelectedAccessor, NotificationType.ACCESS_SUBDUCTED, DateTime.Now,_parent.WishList);
             try {
                 var notificationJson = JsonConvert.SerializeObject(notification,
                     new JsonSerializerSettings()

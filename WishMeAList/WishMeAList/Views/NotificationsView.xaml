@@ -17,7 +17,7 @@
                             <TextBlock Text="{Binding Message}" Style="{ThemeResource CaptionTextBlockStyle}"/>
                             <StackPanel Orientation="Horizontal" Margin="0,15,0,0">
                                 <Button Content="Accept" CommandParameter="{Binding}" Click="Accept_Click"/>
-                                <Button Content="Deny" CommandParameter="{Binding}" Click="Deny_Click" Margin="15,0,0,0" />
+                                <Button Content="Deny" CommandParameter="{Binding}"  Click="Deny_Click" Margin="15,0,0,0" />
                             </StackPanel>
                         </StackPanel>
                     </DataTemplate>

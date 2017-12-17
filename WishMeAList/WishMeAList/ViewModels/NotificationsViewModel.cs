@@ -19,6 +19,7 @@ namespace WishMeAList.ViewModels
             get; set; 
         }
 
+
         public NotificationsViewModel()
         {
             InitNotifications();
@@ -51,13 +52,26 @@ namespace WishMeAList.ViewModels
         public void AcceptNotification(Notification notification)
         {
             notification.Accept();
+            Notifications.Remove(notification);
             RaisePropertyChanged("Notifications");
         }
 
         public void DenyNotification(Notification notification)
         {
             notification.Deny();
+            Deny(notification);
+            Notifications.Remove(notification);
+
             RaisePropertyChanged("Notifications");
+        }
+
+  
+        private async Task Deny(Notification notification)
+        {
+            HttpClient client = new HttpClient();
+            var res = await client.DeleteAsync("http://localhost:65172/api/Notifications/" + notification.NotificationID);
+            RaisePropertyChanged("Notifications");
+
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
@@ -82,12 +83,17 @@ namespace WishMeAList.ViewModels
                 return;
             }
             _wishes.Remove(WishToDelete);
+            if (WishToDelete.BuyerID != null)
+            {
+                NotifyBuyer();
+            }
             //UserManager.CurrentUser.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).FirstOrDefault().Wishes = _wishes;
             //string wishJson = JsonConvert.SerializeObject(WishToDelete);
             HttpClient client = new HttpClient();
             var res = await client.DeleteAsync("http://localhost:65172/api/wishes/"+WishToDelete.WishID); 
             RaisePropertyChanged("Wishes");
             RaisePropertyChanged("ViewWishesVisibility");
+       
         }
 
         private async void DisplayDialog()
@@ -122,6 +128,46 @@ namespace WishMeAList.ViewModels
         {
             this._parent.CurrentData = new AccessorsViewModel(this);
         }
+
+        private async Task NotifyBuyer()
+        {
+            HttpClient client = new HttpClient();
+
+            var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/Users/" + WishToDelete.BuyerID));
+            User user = JsonConvert.DeserializeObject<User>(json);
+
+            Notification notification = new Notification(UserManager.CurrentUser, user, NotificationType.WISH_DELETED, DateTime.Now, WishList);
+            try
+            {
+                var notificationJson = JsonConvert.SerializeObject(notification,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+                    });
+                Debug.WriteLine(notificationJson);
+                var resNotification =
+             await client.PostAsync("http://localhost:65172/api/Notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+                Debug.WriteLine(resNotification);
+                if (resNotification.Content != null)
+                {
+                    string newNotificationJson = await resNotification.Content.ReadAsStringAsync();
+                    if (user.Notifications == null)
+                    {
+                        user.Notifications = new Collection<Notification>();
+                    }
+                    var addedNotification = JsonConvert.DeserializeObject<Notification>(newNotificationJson);
+                    addedNotification.Sender = UserManager.CurrentUser;
+                    addedNotification.Reciever = user;
+                    user.Notifications.Add(addedNotification);
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+
+        }
+
     }
 
 }

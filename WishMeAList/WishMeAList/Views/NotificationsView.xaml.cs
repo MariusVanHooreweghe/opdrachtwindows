@@ -44,5 +44,6 @@ namespace WishMeAList.Views
             NotificationsViewModel vm = DataContext as NotificationsViewModel;
             vm.DenyNotification(not);
         }
+  
     }
 }

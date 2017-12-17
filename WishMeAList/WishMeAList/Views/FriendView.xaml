@@ -10,9 +10,9 @@
     <ScrollViewer HorizontalContentAlignment="Stretch">
         <StackPanel>
             <TextBlock Text="{Binding Friend.Name}" HorizontalAlignment="Center" Style="{ThemeResource TitleTextBlockStyle}"/>
-            <ListView ItemsSource="{Binding Friend.WishLists}" SelectedItem="{Binding SelectedWishList, Mode=TwoWay}" >
-                <ListView.ItemTemplate >
-                    <DataTemplate >
+            <ListView ItemsSource="{Binding Path=WishLists, Mode=TwoWay}" SelectedItem="{Binding SelectedWishList, Mode=TwoWay}" >
+                <ListView.ItemTemplate>
+                    <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding Title}" Style="{ThemeResource HeaderTextBlockStyle}"/>
                             <TextBlock Text="{Binding DateOfEvent}" FontSize="{ThemeResource ListViewHeaderItemThemeFontSize}"/>

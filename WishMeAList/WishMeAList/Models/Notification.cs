@@ -29,7 +29,7 @@ namespace WishMeAList.Models
         public NotificationType Type { get; set; }
         [ForeignKey("WishList")]
         [JsonProperty]
-        public int WishListID { get; set; }
+        public int? WishListID { get; set; }
         [JsonIgnore]
         public WishList WishList { get; set; }
         [JsonProperty]
@@ -42,25 +42,26 @@ namespace WishMeAList.Models
         public Notification(User sender, User reciever, NotificationType type, DateTime date, WishList wishList = null)
         {
             Sender = sender;
-            SenderID = sender.UserID;
+            SenderID = sender == null? 0:sender.UserID;
             Reciever = reciever;
             RecieverID = Reciever == null? 0 : Reciever.UserID;
             Type = type;
             WishList = wishList;
-            WishListID = wishList.WishListID;
+            WishListID = wishList == null? 0:wishList.WishListID;
             Date = date == null ? DateTime.Now : date;
             HasBeenRead = false;
             // Init message
             switch (Type)
             {
-                case NotificationType.REQUEST_FOR_ACCESS: Message = $"{Sender.Name} would like to get access to your wishlist '{WishList?.Title}'";  break;
-                case NotificationType.REQUEST_FOR_ACCESS_CONFIRMATION_MESSAGE: Message = $"{Sender.Name} accepted your request for access to '{WishList?.Title}'"; break;
-                case NotificationType.INVITE_FOR_ACCESS: Message = $"{ Sender.Name} has invited you to access the wishlist '{WishList?.Title}'"; break;
-                case NotificationType.INVITE_FOR_ACCESS_CONFIRMATION_MESSAGE: Message = $"{Sender.Name} accepted your request to access your wishlist '{WishList?.Title}'"; break;
-                case NotificationType.FRIEND_REQUEST: Message = $"{Sender.Name} has sent you a friendrequest"; break;
-                case NotificationType.FRIEND_CONFIRMATION_MESSAGE: Message = $"{Sender.Name} has accepted you as a friend"; break;
-                case NotificationType.ACCESS_SUBDUCTED: Message = $"{Sender.Name} has subducted your access to '{WishList.Title}'." +
+                case NotificationType.REQUEST_FOR_ACCESS: Message = $"{Sender?.Name} would like to get access to your wishlist '{WishList?.Title}'";  break;
+                case NotificationType.REQUEST_FOR_ACCESS_CONFIRMATION_MESSAGE: Message = $"{Sender?.Name} accepted your request for access to '{WishList?.Title}'"; break;
+                case NotificationType.INVITE_FOR_ACCESS: Message = $"{ Sender?.Name} has invited you to access the wishlist '{WishList?.Title}'"; break;
+                case NotificationType.INVITE_FOR_ACCESS_CONFIRMATION_MESSAGE: Message = $"{Sender?.Name} accepted your request to access your wishlist '{WishList?.Title}'"; break;
+                case NotificationType.FRIEND_REQUEST: Message = $"{Sender?.Name} has sent you a friendrequest"; break;
+                case NotificationType.FRIEND_CONFIRMATION_MESSAGE: Message = $"{Sender?.Name} has accepted you as a friend"; break;
+                case NotificationType.ACCESS_SUBDUCTED: Message = $"{Sender?.Name} has subducted your access to '{WishList?.Title}'." +
                         $"Wishes you were planning to buy from that wishlist were removed from your list"; break;
+                case NotificationType.WISH_DELETED: Message = $"{Sender?.Name} has deleted a wish you were planning to buy."; break;
             }
         }
 
