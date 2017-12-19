@@ -21,6 +21,10 @@
     <Compile Remove="Migrations\20171212231727_UserAndWishListAccessor.Designer.cs" />
     <Compile Remove="Migrations\20171216154822_Notification_and_FirstName_LastName.cs" />
     <Compile Remove="Migrations\20171216154822_Notification_and_FirstName_LastName.Designer.cs" />
+    <Compile Remove="Migrations\20171219221955_Cascade wishlist.cs" />
+    <Compile Remove="Migrations\20171219221955_Cascade wishlist.Designer.cs" />
+    <Compile Remove="Migrations\20171219224045_test.cs" />
+    <Compile Remove="Migrations\20171219224045_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

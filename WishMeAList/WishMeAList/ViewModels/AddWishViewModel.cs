@@ -9,6 +9,7 @@ using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using WishMeAList.Models;
 using WishMeAList.Utils;
 
@@ -65,6 +66,21 @@ namespace WishMeAList.ViewModels
         }
 
         private async void PostWish(Wish wish) {
+            if(wish.Title ==null || wish.Title.Trim().Equals(""))
+            {
+                DisplayDialog("Invalid Wish.", "Please enter a name for the wish.");
+                return;
+            }
+            if (wish.Description == null || wish.Description.Trim().Equals(""))
+            {
+                DisplayDialog("Invalid Wish.", "Please enter a description for the wish.");
+                return;
+            }
+            if (wish.Categorie == WishCategorie.DEFAULT)
+            {
+                DisplayDialog("Invalid Wish.", "Please enter a category for the wish.");
+                return;
+            }
             string wishJson = JsonConvert.SerializeObject(wish);
             Debug.Write(wishJson);
             HttpClient client = new HttpClient();
@@ -82,6 +98,17 @@ namespace WishMeAList.ViewModels
 
             //_parent.WishListsOwning.Where(val => val.WishListID == WishList.WishListID).SingleOrDefault().Wishes = Wishes;
             _parent.CurrentData = new WishListViewModel(WishList, this._parent);
+        }
+
+        private async void DisplayDialog(String title, String content)
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
     }
