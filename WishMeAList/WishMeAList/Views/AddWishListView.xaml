@@ -18,7 +18,7 @@
                 <TextBlock Text="Invite some friends:"/>
                 <ScrollViewer HorizontalContentAlignment="Stretch">
                     <StackPanel>
-                        <ListView SelectionMode="Multiple" ItemsSource="{Binding CurrentNotification.Friends}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
+                        <ListView SelectionMode="Multiple" ItemsSource="{Binding Friends}" IsItemClickEnabled="True" ItemClick="ListView_ItemClick">
                             <ListView.ItemTemplate >
                                 <DataTemplate >
                                     <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}"/>

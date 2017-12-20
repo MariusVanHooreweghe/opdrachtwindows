@@ -21,7 +21,7 @@ namespace WishMeAList.ViewModels
         public WishList WishList { get; set; }
         public User CurrentUser { get { return UserManager.CurrentUser; } }
         public Collection<User> SelectedUsers { get; set; }
-
+        public Collection<User> Friends { get; set; }
         public DateTime _dateOfEvent { get; set; }
         public DateTimeOffset DateOfEvent {
             get { return DateTime.SpecifyKind(_dateOfEvent, DateTimeKind.Utc); }
@@ -45,6 +45,23 @@ namespace WishMeAList.ViewModels
             _dateOfEvent = DateTime.Today;
             ConfirmWishListCommand = new RelayCommand(_ => ConfirmWishList());
             SelectedUsers = new Collection<User>();
+            InitFriends();
+        }
+
+        private async Task InitFriends()
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/users/friendships/" + UserManager.CurrentUser.UserID));
+                Friends = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+                Friends = new ObservableCollection<User>();
+            }
+            RaisePropertyChanged("Friends");
         }
 
         public void ConfirmWishList()

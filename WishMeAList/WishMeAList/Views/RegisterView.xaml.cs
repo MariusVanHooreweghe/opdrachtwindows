@@ -43,15 +43,15 @@ namespace WishMeAList.Views
             HttpClient client = new HttpClient();
             var json = await client.GetStringAsync(new Uri("http://localhost:65172/api/Users/"));
             ObservableCollection<User> Users = JsonConvert.DeserializeObject<ObservableCollection<User>>(json);
-            if(Users.Any(val => val.Username.Equals(username)))
+            if(Users.Any(val => val.Username.Trim().Equals(username.Trim())))
             {
                 DisplayDialog("Username is already in use.", "Please enter other username and try again.");
                 return;
-            }else if (!txtPassword.Password.ToString().Equals(txtPasswordRepetition.Password.ToString()))
+            }else if (!txtPassword.Password.Trim().ToString().Equals(txtPasswordRepetition.Password.ToString()))
             {
                 DisplayDialog("Passwords do not match", "Please enter matching passwords and try again.");
                 return;
-            }else if (txtFirstName.Text.Equals("") || txtLastName.Text.Equals(""))
+            }else if (txtFirstName.Text.Trim().Equals("") || txtLastName.Text.Trim().Equals(""))
             {
                 DisplayDialog("You have empty fields", "Please fill in all fields and try again.");
                 return;
