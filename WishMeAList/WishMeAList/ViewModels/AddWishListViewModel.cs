@@ -62,6 +62,17 @@ namespace WishMeAList.ViewModels
         }
         private async void PostWishList()
         {
+            if (WishList.Title== null || WishList.Title.Trim().Equals(""))
+            {
+          
+                DisplayDialog("Invalid Wishlist name", "Please enter a Wishlist name");
+                return;
+                
+            } else if (WishList.DateOfEvent < DateTime.Now)
+            {
+                DisplayDialog("Invalid Date", "Please enter a Date in the future");
+                return;
+            }
             string wishListJson = JsonConvert.SerializeObject(this.WishList);
             HttpClient client = new HttpClient();
             var res = await client.PostAsync("http://localhost:65172/api/wishlists/", new StringContent(wishListJson, System.Text.Encoding.UTF8, "application/json"));
@@ -72,6 +83,17 @@ namespace WishMeAList.ViewModels
                 WishLists.Add(JsonConvert.DeserializeObject<WishList>(newWishListJson));
             }
             this._parent.CurrentData = new WishListsViewModel(this._parent);
+        }
+
+        private async void DisplayDialog(String title, String content)
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = title,
+                Content = content,
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {

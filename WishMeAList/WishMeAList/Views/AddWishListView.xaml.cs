@@ -30,8 +30,13 @@ namespace WishMeAList.Views
 
         public void ListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+          
             AddWishListViewModel vm = DataContext as AddWishListViewModel;
             vm.ListView_ItemClick(sender, e);
         }
+
+
+
+    
     }
 }
