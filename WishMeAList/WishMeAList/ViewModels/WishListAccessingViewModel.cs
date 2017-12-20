@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using WishMeAList.Models;
 using WishMeAList.Utils;
 
@@ -69,24 +70,31 @@ namespace WishMeAList.ViewModels
 
         private void BuyWish()
         {
-            if (Wish.IsChecked)
+            if (WishList == null)
             {
-                Wish.IsChecked = false;
-                Wish.Buyer = null;
-                Wish.BuyerID = null;
-                UserManager.CurrentUser.WishesBuying.Remove(Wish);
+                DisplayDialog();
             }
             else
             {
-                Wish.IsChecked = true;
-                Wish.Buyer = UserManager.CurrentUser;
-                Wish.BuyerID = Wish.Buyer.UserID;
-                UserManager.CurrentUser.WishesBuying.Add(Wish);
+                if (Wish.IsChecked)
+                {
+                    Wish.IsChecked = false;
+                    Wish.Buyer = null;
+                    Wish.BuyerID = null;
+                    UserManager.CurrentUser.WishesBuying.Remove(Wish);
+                }
+                else
+                {
+                    Wish.IsChecked = true;
+                    Wish.Buyer = UserManager.CurrentUser;
+                    Wish.BuyerID = Wish.Buyer.UserID;
+                    UserManager.CurrentUser.WishesBuying.Add(Wish);
+                }
+                UpdateWish(Wish);
+                RaisePropertyChanged("IsChecked");
+                RaisePropertyChanged("Wish");
+                RaisePropertyChanged("Wishes");
             }
-            UpdateWish(Wish);
-            RaisePropertyChanged("IsChecked");
-            RaisePropertyChanged("Wish");
-            RaisePropertyChanged("Wishes");
         }
 
         private async Task UpdateWish(Wish wish)
@@ -100,6 +108,17 @@ namespace WishMeAList.ViewModels
         private void OpenAccessors()
         {
             this._parent.CurrentData = new AccessorsAccessingViewModel(this);
+        }
+
+        private async void DisplayDialog()
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "No Wish selected",
+                Content = "Please select a Wish and try again.",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
 
     }

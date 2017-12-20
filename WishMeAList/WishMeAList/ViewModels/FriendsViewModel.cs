@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.UI.Xaml.Controls;
 using WishMeAList.Models;
 using WishMeAList.Utils;
 
@@ -44,7 +45,26 @@ namespace WishMeAList.ViewModels
 
         private void ShowFriend()
         {
-            _parent.CurrentData = new FriendViewModel(SelectedFriend);
+            if (SelectedFriend == null)
+            {
+                DisplayDialog();
+            }
+            else
+            {
+                _parent.CurrentData = new FriendViewModel(SelectedFriend);
+            }
+           
+        }
+
+        private async void DisplayDialog()
+        {
+            ContentDialog dialog = new ContentDialog()
+            {
+                Title = "No Friend selected",
+                Content = "Please select a Friend and try again.",
+                CloseButtonText = "Ok"
+            };
+            ContentDialogResult result = await dialog.ShowAsync();
         }
     }
 }
