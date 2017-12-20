@@ -22,18 +22,12 @@ namespace WishMeAList.ViewModels
         public RelayCommand SubductAccessCommand { get; set; }
         private WishListViewModel _parent { get; set; }
 
-        public String FriendsVisibility { get { return Accessors.Count == 0 ? "Collapsed" : "Visible"; } }
-        public String InviteMoreFriendsVisibility { get { return OtherFriends.Count == 0 ? "Collapsed" : "Visible"; } }
+        public String FriendsVisibility { get { return (Accessors == null || Accessors.Count == 0) ? "Collapsed" : "Visible"; } }
+        public String InviteMoreFriendsVisibility { get { return (OtherFriends == null || OtherFriends.Count == 0) ? "Collapsed" : "Visible"; } }
 
         public ObservableCollection<User> Accessors
         {
-            get {
-                if (_parent.WishList.Accessors == null)
-                {
-                    return new ObservableCollection<User>();
-                }
-                return new ObservableCollection<User>(_parent.WishList.Accessors?.OrderBy(val => val.FirstName).ThenBy(val => val.LastName)); 
-            }
+            get; set;
         }
 
         public ObservableCollection<User> OtherFriends
@@ -62,6 +56,7 @@ namespace WishMeAList.ViewModels
         private async Task initAccessors()
         {
             var accessorsJson = "{}";
+            Accessors = new ObservableCollection<User>();
             try
             {
                 HttpClient client = new HttpClient();
@@ -71,27 +66,24 @@ namespace WishMeAList.ViewModels
             {
                 Debug.Write(e.Message);
             }
-            _parent.WishList.Accessors = JsonConvert.DeserializeObject<ObservableCollection<User>>(accessorsJson);
+            Accessors = JsonConvert.DeserializeObject<ObservableCollection<User>>(accessorsJson);
             RaisePropertyChanged("FriendsVisibility");
             RaisePropertyChanged("Accessors");
-            RaisePropertyChanged("OtherFriends");
-            RaisePropertyChanged("InviteMoreFriendsVisibility");
         }
         private async Task initOtherFriends()
         {
             var accessorsJson = "{}";
+            OtherFriends = new ObservableCollection<User>();
             try
             {
                 HttpClient client = new HttpClient();
-                accessorsJson = await client.GetStringAsync(new Uri("http://localhost:65172/api/users/friendships/wishlist/" + _parent.WishList.WishListID+"/user"+""));
+                accessorsJson = await client.GetStringAsync(new Uri("http://localhost:65172/api/users/friendships/"+UserManager.CurrentUser.UserID+"/wishlist/" + _parent.WishList.WishListID));
+                OtherFriends = JsonConvert.DeserializeObject<ObservableCollection<User>>(accessorsJson);
             }
             catch (Exception e)
             {
                 Debug.Write(e.Message);
             }
-            _parent.WishList.Accessors = JsonConvert.DeserializeObject<ObservableCollection<User>>(accessorsJson);
-            RaisePropertyChanged("FriendsVisibility");
-            RaisePropertyChanged("Accessors");
             RaisePropertyChanged("OtherFriends");
             RaisePropertyChanged("InviteMoreFriendsVisibility");
         }
@@ -110,21 +102,58 @@ namespace WishMeAList.ViewModels
 
         private void AddAccessors()
         {
+            Notification notification;
             foreach (User friend in _selectedFriends)
             {
-                friend.Notifications.Add(new Notification(UserManager.CurrentUser, friend, NotificationType.INVITE_FOR_ACCESS, DateTime.Now,_parent.WishList));
+                notification = new Notification(friend, UserManager.CurrentUser, NotificationType.INVITE_FOR_ACCESS_CONFIRMATION_MESSAGE, DateTime.Now, _parent.WishList);
+                if (friend.Notifications == null) friend.Notifications = new ObservableCollection<Notification>();
+                friend.Notifications.Add(notification);
+                GrantAccess(notification);
+                CreateNotification(notification);
             }
+            initAccessors();
+            initOtherFriends();
+            RaisePropertyChanged("FriendsVisibility");
+            RaisePropertyChanged("InviteMoreFriendsVisibility");
+        }
+
+        private async void CreateNotification(Notification notification)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                var notificationJson = JsonConvert.SerializeObject(notification,
+                    new JsonSerializerSettings()
+                    {
+                        ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore,
+                    });
+                 var resNotification =
+                 await client.PostAsync("http://localhost:65172/api/Notifications/", new StringContent(notificationJson, System.Text.Encoding.UTF8, "application/json"));
+            }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+        }
+        private async void GrantAccess(Notification notification)
+        {
+            string wishListJson = "{}";
+            Debug.Write(wishListJson);
+            HttpClient client = new HttpClient();
+            var res = await client.PostAsync("http://localhost:65172/api/WishLists/accessor/" + notification.SenderID + "/create/" + notification.WishListID, new StringContent(wishListJson, System.Text.Encoding.UTF8, "application/json"));
+
             RaisePropertyChanged("FriendsVisibility");
             RaisePropertyChanged("Accessors");
             RaisePropertyChanged("OtherFriends");
             RaisePropertyChanged("InviteMoreFriendsVisibility");
         }
-
         private async Task SubductAccess()
         {
             List<Wish> wishesBuying = _parent.WishList.Wishes.Where(wish => wish.Buyer == SelectedAccessor).ToList();
             //SelectedAccessor.WishListsAccessing.Remove(_parent.WishList);
-            _parent.WishList.Accessors.Remove(SelectedAccessor);
+            if (_parent.WishList.Accessors != null)_parent.WishList.Accessors.Remove(SelectedAccessor);
+            //Accessors.Remove(SelectedAccessor);
+            //OtherFriends.Add(SelectedAccessor);
             //foreach (Wish wish in wishesBuying)
             //{
             //    SelectedAccessor.WishesBuying.Remove(wish);
@@ -155,7 +184,8 @@ namespace WishMeAList.ViewModels
             {
                 Debug.Write(e.Message);
             }
-            
+            initAccessors();
+            initOtherFriends();
             RaisePropertyChanged("FriendsVisibility");
             RaisePropertyChanged("Accessors");
             RaisePropertyChanged("OtherFriends");

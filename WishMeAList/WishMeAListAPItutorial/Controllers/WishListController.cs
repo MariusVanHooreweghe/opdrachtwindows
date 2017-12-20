@@ -103,6 +103,8 @@ namespace WishMeAListAPI.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
+            List<WishListAccessor> wlAccessors = _context.WishListAccessors.Where(t => t.WishListID == id).ToList();
+            wlAccessors.ForEach(wla => DeleteAccess(wla.WishListID, wla.UserID));
             var wishList = _context.WishLists.FirstOrDefault(t => t.WishListID == id);
             if (wishList == null)
             {

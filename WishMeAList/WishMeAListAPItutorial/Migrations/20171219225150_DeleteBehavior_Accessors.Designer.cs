@@ -12,9 +12,10 @@ using WishMeAListAPItutorial.Models;
 namespace WishMeAListAPItutorial.Migrations
 {
     [DbContext(typeof(WishListContext))]
-    partial class WishListContextModelSnapshot : ModelSnapshot
+    [Migration("20171219225150_DeleteBehavior_Accessors")]
+    partial class DeleteBehavior_Accessors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -387,7 +388,7 @@ namespace WishMeAListAPItutorial.Migrations
                     b.HasOne("WishMeAListAPItutorial.Models.WishList", "WishList")
                         .WithMany()
                         .HasForeignKey("WishListID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("WishMeAListAPItutorial.Models.Wish", b =>

@@ -21,6 +21,7 @@ namespace WishMeAListAPItutorial.Data.Mappers
             builder.HasMany(t => t.WishesBuying).WithOne().IsRequired(false).HasForeignKey(t => t.BuyerID).IsRequired(false).OnDelete(DeleteBehavior.Restrict);
             builder.HasMany(t => t.WishListsOwning).WithOne().IsRequired().HasForeignKey(t => t.OwnerID).OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(t => t.Notifications).WithOne().IsRequired(false).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(t => t.WishListsAccessing).WithOne(t => t.User).IsRequired().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

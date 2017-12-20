@@ -38,14 +38,14 @@ namespace WishMeAListAPI.Controllers
         [HttpGet("friendships/{id}", Name = "GetFriends")]
         public IEnumerable<User> GetFriendsById(long id)
         {
-            IEnumerable<User> befriendedFriends = _context.Friendships.Include(f => f.Befriended).ThenInclude(f => f.WishListsOwning).Where(f => f.BefrienderID == id).Select(f => f.Befriended).Include(f => f.WishListsOwning).ToList();
-            IEnumerable<User> befrienderFriends = _context.Friendships.Include(f => f.Befriender).ThenInclude(f => f.WishListsOwning).Where(f => f.BefriendedID == id).Select(f => f.Befriender).Include(f => f.WishListsOwning).ToList();
+            IEnumerable<User> befriendedFriends = _context.Friendships.Include(f => f.Befriended).ThenInclude(f => f.WishListsOwning).Where(f => f.BefrienderID == id).Select(f => f.Befriended).Include(f => f.WishListsAccessing).Include(f => f.WishListsOwning).ToList();
+            IEnumerable<User> befrienderFriends = _context.Friendships.Include(f => f.Befriender).ThenInclude(f => f.WishListsOwning).Where(f => f.BefriendedID == id).Select(f => f.Befriender).Include(f => f.WishListsAccessing).Include(f => f.WishListsOwning).ToList();
             return Enumerable.Union(befriendedFriends, befrienderFriends);
         }
-        [HttpGet("friendships/wishlist/{wishlistid}/user/{userid}", Name ="GetOtherFriends")]
+        [HttpGet("friendships/{userid}/wishlist/{wishlistid}", Name ="GetOtherFriends")]
         public IEnumerable<User> GetOtherFriendsByWishListIdAndUserId(long wishlistid, long userid)
         {
-            return GetFriendsById(userid).Where(u => !u.WishListsAccessing.Where(wla => wla.WishListID == wishlistid).Any(wla => wla.UserID == userid));
+            return GetFriendsById(userid).Where(u => !_context.WishListAccessors.Where(wla => wla.WishListID == wishlistid).Select(wla => wla.UserID).ToList().Contains(u.UserID));
         }
         [HttpPost]
         public IActionResult Create([FromBody] User item)

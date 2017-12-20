@@ -18,7 +18,8 @@ namespace WishMeAListAPItutorial.Data.Mappers
                 .IsRequired()
                 .HasMaxLength(100);
             builder.Property(t => t.DateOfEvent).IsRequired();
-            builder.HasMany(t => t.Wishes).WithOne().IsRequired().HasForeignKey(t => t.WishListID).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(t => t.Wishes).WithOne().IsRequired().HasForeignKey(t => t.WishListID).OnDelete(DeleteBehavior.Restrict);
+            builder.HasMany(t => t.Accessors).WithOne(acc => acc.WishList).IsRequired().HasForeignKey(acc => acc.WishListID).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
